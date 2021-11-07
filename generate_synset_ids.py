@@ -47,8 +47,16 @@ while i < nr_id_classes:
 # Print the commando to run in ImageNet-Dataset-Downloader
 
 # print('Random synset ids: {}'.format(synset_ids_str))
-print('python ./downloader.py -data_root ./data/OOD/ -use_class_list True -class_list {} -images_per_class 10'.format(ood_synset_ids_str))
-print('python ./downloader.py -data_root ./data/ID/ -use_class_list True -class_list {} -images_per_class 10'.format(id_synset_ids_str))
+ood_downloader = 'python ./downloader.py -data_root ./data/OOD/ -use_class_list True -class_list {} -images_per_class 10'.format(ood_synset_ids_str)
+id_downloader = 'python ./downloader.py -data_root ./data/ID/ -use_class_list True -class_list {} -images_per_class 10'.format(id_synset_ids_str)
+
+with open("ood_download.sh", "w") as ood_file:
+    ood_file.write("#!/bin/bash \n")
+    ood_file.write(ood_downloader)
+
+with open("id_download.sh", "w") as id_file:
+    id_file.write("#!/bin/bash \n")
+    id_file.write(id_downloader)
 
 
 
