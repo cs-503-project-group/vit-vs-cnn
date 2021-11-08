@@ -1,6 +1,6 @@
 #!/bin/bash 
 
-python generate_synset_ids.py $1 $2
+python3 generate_synset_ids.py $1 $2
 git clone  https://github.com/mf1024/ImageNet-datasets-downloader
 cd ImageNet-datasets-downloader
 mkdir data
