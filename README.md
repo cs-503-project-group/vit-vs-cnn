@@ -1,11 +1,11 @@
 # vit-vs-cnn
 Project of the course CS-503 "Visual intelligence: Machines &amp; Minds" at EPFL 2021. Performance comparison of ViTs and CNNs on unsemantic distribution shifts (i.e. unseen classes).
 
-## Generate data from specified classes in ImageNet-21k with run.sh script
-- run `run.sh n m`, where n and m are ID classes and OOD classes. It should download all nessesary data and install all requirements. It is advised to use virtual environment before
+## Generate data from specified classes in ImageNet-21k with setup.sh script
+- run `setup.sh n m`, where n and m are ID classes and OOD classes. It should download all nessesary data and install all requirements. It is advised to use virtual environment before
 (`pip install virtualenv`, `virtualenv vi`, `source vi/bin/activate` )  
 
-## Generate data from specified classes in ImageNet-21k
+## Alternatively enerate data from specified classes in ImageNet-21k
 Here are the steps for downloading data belonging to randomly chosen classes from ImageNet-21k that aren't in ImageNet-1k.
 - Clone this repo to your local computer;
 - Run `python generate_synset_ids.py n n` to get the synset_ids of n random classes from ImageNet-21k that aren't in ImageNet-1k. This command will the exact command with the random synset_ids that you will need to run in the next step.
