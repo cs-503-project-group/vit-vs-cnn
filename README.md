@@ -17,8 +17,8 @@ The commando above will download the images inside the folder `data`.
 
 ## TODO plan
 
-- [ ] Find  ResNet  and  ViT  pre-trained  on  ImageNet-1k
-- [ ] Prepare  an  out-of-distribution  dataset  from  classes  in  ImageNet-21kthat are not in ImageNet-1k
+- [x] Find  ResNet  and  ViT  pre-trained  on  ImageNet-1k
+- [x] Prepare  an  out-of-distribution  dataset  from  classes  in  ImageNet-21kthat are not in ImageNet-1k
 - [ ] Compare the two models’performance in detecting OOD inputs
 - [ ] Compare with ConvMixer
 - [ ] MLPMixer
