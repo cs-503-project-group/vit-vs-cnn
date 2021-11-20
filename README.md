@@ -20,9 +20,10 @@ The commando above will download the images inside the folder `data`.
 - [x] Find  ResNet  and  ViT  pre-trained  on  ImageNet-1k
 - [x] Prepare  an  out-of-distribution  dataset  from  classes  in  ImageNet-21kthat are not in ImageNet-1k
 - [ ] Compare the two models’performance in detecting OOD inputs
-- [ ] Compare with ConvMixer
-- [ ] MLPMixer
-- [ ] EcaResNet
+- [ ] Compare with other models
+  - [ ] ConvMixer
+  - [ ] MLPMixer
+  - [ ] EcaResNet
 - [ ] Study   how   role   of   attention   and   convolution   onmodel’s performance in OOD detection
 - [ ] Study how results change when moving from semanticdistribution shifts to non-semantic distribution shifts
 
