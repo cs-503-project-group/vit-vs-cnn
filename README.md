@@ -16,7 +16,7 @@ Here are the steps for downloading data belonging to randomly chosen classes fro
 The commando above will download the images inside the folder `data`.
 
 ## TODO plan
-
+- [ ] take a look: [Evading the Simplicity Bias: Training a Diverse Set of Models Discovers Solutions with Superior OOD Generalization](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=vmAe35UAAAAJ&sortby=pubdate&citation_for_view=vmAe35UAAAAJ:kVjdVfd2voEC)
 - [x] Find  ResNet  and  ViT  pre-trained  on  ImageNet-1k
 - [x] Prepare  an  out-of-distribution  dataset  from  classes  in  ImageNet-21k that are not in ImageNet-1k
 - [ ] Rearrange OOD and ID data to have all images in one folder
