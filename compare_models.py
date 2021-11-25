@@ -17,14 +17,18 @@ device = 'cuda' if cuda.is_available() else 'cpu'
 
 class Image_Dataset(Dataset):
     def __init__(self, id_data_dir, ood_data_dir):
-        self.id_data_dir = id_data_dir+"acorn squash"
+        self.id_data_dir = id_data_dir
         self.ood_data_dir = ood_data_dir
         self.data = []
+
         for file in os.listdir(self.id_data_dir)[:10]:
-            self.data.append((self.id_data_dir+"/"+file, 0))
-        for file in os.listdir(self.ood_data_dir)[:1]:
-            self.data.append((self.ood_data_dir+file, 1))
-        print(self.data)
+            self.data.append((self.id_data_dir+file, 0))
+
+        for folder in os.listdir(self.ood_data_dir)[:1]:
+            for file in os.listdir(self.ood_data_dir+folder)[:10]:
+                self.data.append((self.ood_data_dir+f"{folder}/"+file, 1))
+        
+        
 
     def __getitem__(self, idx):
         
@@ -38,8 +42,8 @@ class Image_Dataset(Dataset):
         return len(self.data)
 
 
-ood_data_dir = "../data/OOD/"
-id_data_dir = "../data/ID/"
+ood_data_dir = "/home/SHARED_FOLDER/data/OOD_data/"
+id_data_dir = "/home/SHARED_FOLDER/data/ID_data/imagenet1k-val/"
 
 ori_preprocess = Compose([
         Resize((224), interpolation=Image.BICUBIC),
