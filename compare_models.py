@@ -21,19 +21,22 @@ class Image_Dataset(Dataset):
         self.ood_data_dir = ood_data_dir
         self.data = []
 
-        for file in os.listdir(self.id_data_dir)[:10]:
-            self.data.append((self.id_data_dir+file, 0))
+        for folder in os.listdir(self.id_data_dir)[:10]:
+            for file in os.listdir(self.id_data_dir+folder)[:10]:
+                self.data.append((self.id_data_dir+folder+"/"+file, 0))
 
         for folder in os.listdir(self.ood_data_dir)[:1]:
             for file in os.listdir(self.ood_data_dir+folder)[:10]:
-                self.data.append((self.ood_data_dir+f"{folder}/"+file, 1))
+                self.data.append((self.ood_data_dir+folder+"/"+file, 1))
         
         
 
     def __getitem__(self, idx):
         
         img_path, target = self.data[idx]
-        img = ori_preprocess(Image.open(img_path))
+        img = None
+        with Image.open(img_path) as im:
+            img = ori_preprocess(im)
 
 
         return img, target
@@ -42,8 +45,8 @@ class Image_Dataset(Dataset):
         return len(self.data)
 
 
-ood_data_dir = "/home/SHARED_FOLDER/data/OOD_data/"
-id_data_dir = "/home/SHARED_FOLDER/data/ID_data/imagenet1k-val/"
+ood_data_dir = "vit-vs-cnn/data/OOD_data/"
+id_data_dir = "vit-vs-cnn/data/ID_data/"
 
 ori_preprocess = Compose([
         Resize((224), interpolation=Image.BICUBIC),
@@ -53,7 +56,7 @@ ori_preprocess = Compose([
 dataset = Image_Dataset(id_data_dir, ood_data_dir)
 data_loader = DataLoader(dataset, batch_size = 1, shuffle= True)
 
-thresholds = torch.range(0.5, 0.9, step=0.1)
+thresholds = np.arange(0.5, 0.9, step=0.1)
 
 # ResNet
 ood_threshold = 0.5
@@ -73,15 +76,14 @@ print(deit_prc, deit_rec, deit_f1)
 
 
 # ConvMixer
-convmixer_model = convmixer.ConvMixer().to(device)
+# convmixer_model = convmixer.ConvMixer().to(device)
 
-convmixer_prc, convmixer_rec, convmixer_f1 = evaluate_OOD_detection(convmixer_model, data_loader, thresholds, device)
-print(convmixer_prc, convmixer_rec, convmixer_f1)
+# convmixer_prc, convmixer_rec, convmixer_f1 = evaluate_OOD_detection(convmixer_model, data_loader, thresholds, device)
+# print(convmixer_prc, convmixer_rec, convmixer_f1)
 
 
 # MLPMixer
 mlpmixer_model = mlpmixer.MLPMixer().to(device)
-
 mlpmixer_prc, mlpmixer_rec, mlpmixer_f1 = evaluate_OOD_detection(mlpmixer_model, data_loader, thresholds, device)
 print(mlpmixer_prc, mlpmixer_rec, mlpmixer_f1)
 
