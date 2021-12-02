@@ -28,4 +28,5 @@ The commando above will download the images inside the folder `data`.
   - [ ] EcaResNet
 - [ ] Study   how   role   of   attention   and   convolution   on model’s performance in OOD detection
 - [ ] Study how results change when moving from semantic distribution shifts to non-semantic distribution shifts
+- [ ] Check if the classes of the ground truth are ok by randomly picking 20 classes and double-checking it's ok!
 
