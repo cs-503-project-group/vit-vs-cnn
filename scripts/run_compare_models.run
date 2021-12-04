@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --chdir /home/mlyniec/vi_logs
+#SBATCH --chdir /home/matvieir/cs-503-logs
 
 #SBATCH --nodes 1
 
@@ -22,6 +22,6 @@ echo "fidis $HOSTNAME"
 echo STARTING AT `date`
 echo $PWD
 
-python3 /home/mlyniec/vit-vs-cnn/compare_models.py
+python3 /home/matvieir/vit-vs-cnn/compare_models.py
 
 echo FINISHED at `date`

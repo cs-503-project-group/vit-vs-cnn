@@ -3,7 +3,6 @@ import numpy as np
 import torch
 import torch.nn as nn
 from torchvision.transforms import Compose, ToTensor, Resize, CenterCrop
-from torchmetrics import Precision
 from torch.utils.data import DataLoader, Dataset
 from PIL import Image
 import os
@@ -22,11 +21,11 @@ class Image_Dataset(Dataset):
         self.data = []
 
         for folder in os.listdir(self.id_data_dir)[:10]:
-            for file in os.listdir(self.id_data_dir+folder)[:10]:
+            for file in os.listdir(self.id_data_dir+folder)[:20]:
                 self.data.append((self.id_data_dir+folder+"/"+file, 0))
 
         for folder in os.listdir(self.ood_data_dir)[:1]:
-            for file in os.listdir(self.ood_data_dir+folder)[:10]:
+            for file in os.listdir(self.ood_data_dir+folder)[:20]:
                 self.data.append((self.ood_data_dir+folder+"/"+file, 1))
         
         
@@ -49,7 +48,7 @@ class Image_Dataset_ID(Dataset):
         self.id_data_dir = id_data_dir
         self.data = []
         self.classes = []
-        with open('vit-vs-cnn/classes_imagenet/ground_truth_labels_validation_1k.json') as f_in:
+        with open('../vit-vs-cnn/classes_imagenet/ground_truth_labels_validation_1k.json') as f_in:
             self.gt_labels = json.load(f_in)
         
         for folder in os.listdir(self.id_data_dir):
@@ -70,9 +69,13 @@ class Image_Dataset_ID(Dataset):
     def __len__(self):
         return len(self.data)
 
+def print_score_recall_f1(model_name, id_prc, id_recall, id_f1, ood_prc, ood_recall, ood_f1):
+    print(f'\n\n--------------- {model_name} ----------------')
+    print(f'ID detection:\n    -Precision: {id_prc} \n    -Score: {id_recall} \n    -F1-score: {id_f1}')
+    print(f'OOD detection:\n    -Precision: {ood_prc} \n    -Score: {ood_recall} \n    -F1-score: {ood_f1}')
 
-ood_data_dir = "vit-vs-cnn/data/OOD_data/"
-id_data_dir = "vit-vs-cnn/data/ID_data/"
+ood_data_dir = "../vit-vs-cnn/data/OOD_data/"
+id_data_dir = "../vit-vs-cnn/data/ID_data/"
 
 ori_preprocess = Compose([
         Resize((224), interpolation=Image.BICUBIC),
@@ -82,10 +85,11 @@ ori_preprocess = Compose([
 # OOD evaluation
 dataset = Image_Dataset(id_data_dir, ood_data_dir)
 data_loader = DataLoader(dataset, batch_size=1, shuffle=True)
-
+print('created dataset for OOD')
 # ID evaluation
 dataset_id = Image_Dataset_ID(id_data_dir)
 data_loader_ID = DataLoader(dataset_id, batch_size=1, shuffle=True)
+print('created dataset for ID')
 
 thresholds = np.arange(0.5, 0.9, step=0.1)
 
@@ -109,9 +113,7 @@ with open('id_resnet_rec.pickle', 'wb') as f:
 with open('id_resnet_f1.pickle', 'wb') as f:
     pickle.dump(id_resnet_f1, f)
 
-print(id_resnet_prc, id_resnet_rec, id_resnet_f1)
-print(ood_resnet_prc, ood_resnet_rec, ood_resnet_f1)
-
+print_score_recall_f1('ResNet', id_resnet_prc, id_resnet_rec, id_resnet_f1, ood_resnet_prc, ood_resnet_rec, ood_resnet_f1)
 
 
 # --------------------------------------- DeiT ---------------------------------------
@@ -134,8 +136,8 @@ with open('id_deit_rec.pickle', 'wb') as f:
 with open('id_deit_f1.pickle', 'wb') as f:
     pickle.dump(id_deit_f1, f)
 
-print(id_deit_prc, id_deit_rec, id_deit_f1)
-print(ood_deit_prc, ood_deit_rec, ood_deit_f1)
+
+print_score_recall_f1('DeiT', id_deit_prc, id_deit_rec, id_deit_f1, ood_deit_prc, ood_deit_rec, ood_deit_f1)
 
 
 # ConvMixer
@@ -165,8 +167,9 @@ with open('id_mlpmixer_rec.pickle', 'wb') as f:
 with open('id_mlpmixer_f1.pickle', 'wb') as f:
     pickle.dump(id_mlpmixer_f1, f)
 
-print(id_mlpmixer_prc, id_mlpmixer_rec, id_mlpmixer_f1)
-print(ood_mlpmixer_prc, ood_mlpmixer_rec, ood_mlpmixer_f1)
+print_score_recall_f1('MLPMixer', id_mlpmixer_prc, id_mlpmixer_rec, id_mlpmixer_f1, 
+                                  ood_mlpmixer_prc, ood_mlpmixer_rec, ood_mlpmixer_f1)
+
 
 # --------------------------------------- EcaResNet ---------------------------------------
 ecaresnet_model = ecaresnet.ECAResNet().to(device)
@@ -189,5 +192,5 @@ with open('id_ecaresnet_rec.pickle', 'wb') as f:
 with open('id_ecaresnet_f1.pickle', 'wb') as f:
     pickle.dump(id_ecaresnet_f1, f)
 
-print(id_ecaresnet_prc, id_ecaresnet_rec, id_ecaresnet_f1)
-print(ood_ecaresnet_prc, ood_ecaresnet_rec, ood_ecaresnet_f1)
+print_score_recall_f1('MLPMixer', id_ecaresnet_prc, id_ecaresnet_rec, id_ecaresnet_f1, 
+                                  ood_ecaresnet_prc, ood_ecaresnet_rec, ood_ecaresnet_f1)
