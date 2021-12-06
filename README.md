@@ -25,6 +25,7 @@ The commando above will download the images inside the folder `data`.
   - [ ]  mixer_b16_224
   - [ ]  ecaresnet50d
   - [ ]  deit_small_patch16_224
+- [ ]  create charts like the ones in [ODIN](https://github.com/facebookresearch/odin)
 - [ ] Compare all models for ID data
 - [ ] Compare the two models’ performance in detecting OOD inputs
 - [ ] Compare with other models
