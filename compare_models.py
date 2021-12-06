@@ -2,6 +2,7 @@ from models import *
 import numpy as np
 from torchvision.transforms import Compose, ToTensor, Resize, CenterCrop
 from torch.utils.data import DataLoader, Dataset
+from torchvision.datasets import ImageNet
 from PIL import Image
 import os
 from eval_utils import evaluate_OOD_detection, evaluate_ID_detection
@@ -80,12 +81,18 @@ ori_preprocess = Compose([
         ToTensor()])
 
 # OOD evaluation
+print('Started creating OOD dataset and dataloader')
 dataset = Image_Dataset(id_data_dir, ood_data_dir)
 data_loader = DataLoader(dataset, batch_size=1, shuffle=True)
+print('Done creating OOD dataset and dataloader')
 
 # ID evaluation
-dataset_id = Image_Dataset_ID(id_data_dir)
-data_loader_ID = DataLoader(dataset_id, batch_size=1, shuffle=True)
+# dataset_id = Image_Dataset_ID(id_data_dir)
+print('Trying to create imagenetdata')
+imagenet_data = ImageNet(root='../vit-vs-cnn/data/imagenet-val', split='val', transform=ori_preprocess)
+print('Created imagenetdata!')
+data_loader_ID = DataLoader(imagenet_data, batch_size=1, shuffle=True)
+print('Created DataLoader')
 
 thresholds = np.arange(0.5, 0.9, step=0.1)
 
@@ -93,7 +100,10 @@ thresholds = np.arange(0.5, 0.9, step=0.1)
 resnet_model = resnet.ResNet().to(device)
 # the goal is to identify OOD samples
 ood_resnet_prc, ood_resnet_rec, ood_resnet_f1 = evaluate_OOD_detection(resnet_model, data_loader, thresholds, device)
-id_resnet_prc, id_resnet_rec, id_resnet_f1 = evaluate_ID_detection(resnet_model, data_loader_ID, dataset_id.classes, device)
+print('Got OOD detection of resnet')
+id_resnet_prc, id_resnet_rec, id_resnet_f1 = evaluate_ID_detection(resnet_model, data_loader_ID, device)
+print('Got ID detection of resnet')
+
 
 print_score_recall_f1('ResNet', id_resnet_prc, id_resnet_rec, id_resnet_f1, ood_resnet_prc, ood_resnet_rec, ood_resnet_f1)
 

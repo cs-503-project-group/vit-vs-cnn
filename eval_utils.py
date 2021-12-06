@@ -33,14 +33,18 @@ def evaluate_OOD_detection(model, dataloader, thresholds, device, num_classes=10
     return precisions, recalls, f1_scores
 
 
-def evaluate_ID_detection(model, dataloader, classes, device, num_classes=1000, batch_size=1):
+def evaluate_ID_detection(model, dataloader, device, num_classes=1000, batch_size=1):
     probs = np.zeros((batch_size, num_classes))
     targets = np.zeros((batch_size, 1))
     model.to(device)
     model.eval()
+    target_classes = []
     with torch.no_grad():
         for ind, batch in enumerate(dataloader):
+            print('in loop')
             inputs, batch_target = batch[0].cuda(), batch[1]
+            if batch_target not in target_classes:
+                target_classes.append(batch_target)
             inputs.to(device) 
             batch_probs = model(inputs)
             if ind == 0:
@@ -54,5 +58,5 @@ def evaluate_ID_detection(model, dataloader, classes, device, num_classes=1000, 
     print(preds)
     print(targets)
     # print(f'labels: {classes}')
-    prc, rec, f1, _ = precision_recall_fscore_support(targets, preds, labels=classes, average='macro')
+    prc, rec, f1, _ = precision_recall_fscore_support(targets, preds, labels=target_classes, average='macro')
     return prc, rec, f1
