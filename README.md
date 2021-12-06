@@ -20,10 +20,16 @@ The commando above will download the images inside the folder `data`.
 - [x] Find  ResNet  and  ViT  pre-trained  on  ImageNet-1k
 - [x] Prepare  an  out-of-distribution  dataset  from  classes  in  ImageNet-21k that are not in ImageNet-1k
 - [x] Rearrange OOD and ID data to have all images in one folder
+- [ ] Read how much convolution is in models:
+  - [ ]  resnet50
+  - [ ]  mixer_b16_224
+  - [ ]  ecaresnet50d
+  - [ ]  deit_small_patch16_224
+- [ ]  create charts like the ones in [ODIN](https://github.com/facebookresearch/odin)
 - [ ] Compare all models for ID data
 - [ ] Compare the two models’ performance in detecting OOD inputs
 - [ ] Compare with other models
-  - [ ] ConvMixer: model not found
+  - [ ] ConvMixer: model not found 
   - [ ] MLPMixer: strange probabilities => read about MLPMixer output
   - [ ] EcaResNet
 - [ ] Study   how   role   of   attention   and   convolution   on model’s performance in OOD detection
