@@ -67,6 +67,36 @@ class Image_Dataset_ID(Dataset):
     def __len__(self):
         return len(self.data)
 
+
+class MultiDomain_Dataset(Dataset):
+    def __init__(self, md_data_dir):
+        self.md_data_dir = md_data_dir
+        self.data = []
+        self.classes = [] # what is this for?
+        # Load ground truth labels
+        with open('../vit-vs-cnn/classes_imagenet/imagenet_r.json') as f_in:
+            self.gt_labels = json.load(f_in)
+        
+        # Add MD images to data [img_name, gt_label]
+        for folder in os.listdir(self.md_data_dir):
+            for file in os.listdir(self.md_data_dir + folder)[:10]:
+                gt_label = self.gt_labels[folder+"/"+file]
+                if gt_label not in self.classes:
+                    self.classes.append(gt_label)
+                self.data.append((self.md_data_dir + folder + '/' + file, gt_label))
+
+    def __getitem__(self, idx):
+        img_path, target = self.data[idx]
+        with Image.open(img_path).convert('RGB') as im:
+            img = ori_preprocess(im) # why pre-process? why this way?
+        
+        return img, target
+
+    def __len__(self):
+        return len(self.data)
+
+
+
 def print_score_recall_f1(model_name, id_prc, id_recall, id_f1, ood_prc, ood_recall, ood_f1):
     print(f'\n\n--------------- {model_name} ----------------')
     print(f'ID detection:\n    -Precision: {id_prc} \n    -Score: {id_recall} \n    -F1-score: {id_f1}')
@@ -74,6 +104,7 @@ def print_score_recall_f1(model_name, id_prc, id_recall, id_f1, ood_prc, ood_rec
 
 ood_data_dir = "../vit-vs-cnn/data/OOD_data/"
 id_data_dir = "../vit-vs-cnn/data/ID_data/"
+md_data_dir = "../vit-vs-cnn/data/imagenet-r/"
 
 ori_preprocess = Compose([
         Resize((224), interpolation=Image.BICUBIC),
@@ -90,6 +121,7 @@ print('Done creating OOD dataset and dataloader')
 # dataset_id = Image_Dataset_ID(id_data_dir)
 print('Trying to create imagenetdata')
 imagenet_data = ImageNet(root='../vit-vs-cnn/data/imagenet-val', split='val', transform=ori_preprocess)
+print(imagenet_data)
 print('Created imagenetdata!')
 data_loader_ID = DataLoader(imagenet_data, batch_size=1, shuffle=True)
 print('Created DataLoader')

@@ -1,13 +1,15 @@
 import os
 import pandas as pd
+from pathlib import Path
+import json
 
-ImagenetR_path = "vit-vs-cnn/data/imagenet-r/"
-csv_file_path = "vit-vs-cnn/classes_imagenet/imagenet_r.csv"
+ImagenetR_path = "../vit-vs-cnn/data/imagenet-r/"
+json_file_path = Path("../vit-vs-cnn/classes_imagenet/imagenet_r.json")
 
 data_dict = {}
 
-categories = open('vit-vs-cnn/classes_imagenet/classes_in_imagenet_1k.txt', 'r')
-indices = open('vit-vs-cnn/classes_imagenet/imagenet1000_clsidx_to_labels.txt', 'r')
+categories = open('../vit-vs-cnn/classes_imagenet/classes_in_imagenet_1k.txt', 'r')
+indices = open('../vit-vs-cnn/classes_imagenet/imagenet1000_clsidx_to_labels.txt', 'r')
 label2idx = {}
 cat2idx = {}
 categories = categories.readlines()
@@ -34,14 +36,17 @@ for i,line in enumerate(categories):
     count+=1
 
 
-print(cat2idx)
+
 data = {}
 for folder in os.listdir(ImagenetR_path):
-    for file in os.listdir(ImagenetR_path+folder):
-        data[file] = cat2idx[folder]
+    for file_ in os.listdir(ImagenetR_path+folder):
+        if folder in cat2idx:
+            data[folder+"/"+file_] = cat2idx[folder]
 
+with open(json_file_path, 'w') as fp:
+    json.dump(data, fp)
 
-
-data_frame = pd.Dataframe(data)
-data_frame.to_csv(csv_file_path)
+# print(data)
+# data_frame = pd.DataFrame.from_dict(data, orient='index', columns= ["label"])
+# data_frame.to_csv(csv_file_path)
 
