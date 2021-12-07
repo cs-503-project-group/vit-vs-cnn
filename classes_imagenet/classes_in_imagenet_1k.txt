@@ -908,7 +908,6 @@ n04116512: rubber eraser, rubber, pencil eraser
 n04325704: stole
 n07831146: carbonara
 n03255030: dumbbell
-href="ht:
 n02102040: English springer, English springer spaniel
 n02110063: malamute, malemute, Alaskan malamute
 n02089867: Walker hound, Walker foxhound
