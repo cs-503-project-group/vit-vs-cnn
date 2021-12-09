@@ -38,25 +38,24 @@ def evaluate_ID_detection(model, dataloader, device, num_classes=1000, batch_siz
     targets = np.zeros((batch_size, 1))
     model.to(device)
     model.eval()
-    target_classes = []
+    # target_classes = []
     with torch.no_grad():
         for ind, batch in enumerate(dataloader):
-            print('in loop')
             inputs, batch_target = batch[0].cuda(), batch[1]
-            if batch_target not in target_classes:
-                target_classes.append(batch_target)
+            # if batch_target not in target_classes:
+            #     target_classes.append(batch_target)
             inputs.to(device) 
             batch_probs = model(inputs)
             if ind == 0:
                 probs = batch_probs.cpu().numpy()
                 targets = batch_target.cpu().numpy()
-                # print(f'\nbatch_probs: {probs[0]} with size {len(probs[0])}\n')
             else:
                 probs = np.concatenate((probs, batch_probs.cpu().numpy()), axis=0)
                 targets = np.append(targets, batch_target.cpu().numpy())
-    preds = np.argmax(probs, axis=1) + 1 # the number (index + 1) is the number of the class with maximum probability, which goes from 1 to 1_000
+    preds = np.argmax(probs, axis=1) # the number (index + 1) is the number of the class with maximum probability, which goes from 1 to 1_000
     print(preds)
     print(targets)
     # print(f'labels: {classes}')
+    target_classes = np.linspace(0, 999)
     prc, rec, f1, _ = precision_recall_fscore_support(targets, preds, labels=target_classes, average='macro')
     return prc, rec, f1

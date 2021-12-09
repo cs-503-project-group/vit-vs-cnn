@@ -7,6 +7,7 @@ class ECAResNet(nn.Module):
         super(ECAResNet, self).__init__()
         self.ecaresnet = timm.create_model('ecaresnet50d', pretrained=True)
         self.softmax = nn.Softmax()
+        self.name = 'ECAResNet'
     
     def forward(self, image):
         logits = self.ecaresnet(image)
