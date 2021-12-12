@@ -1,3 +1,67 @@
 fidis i61
 STARTING AT Thu Dec 9 12:54:23 CET 2021
 /home/matvieir/vit-vs-cnn
+/home/matvieir/opt/venv-gcc/lib/python3.7/site-packages/torchvision/transforms/transforms.py:281: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  "Argument interpolation should be of type InterpolationMode instead of int. "
+/home/matvieir/vit-vs-cnn/models/resnet.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/opt/venv-gcc/lib/python3.7/site-packages/sklearn/metrics/_classification.py:1308: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/matvieir/opt/venv-gcc/lib/python3.7/site-packages/sklearn/metrics/_classification.py:1308: UndefinedMetricWarning: Recall and F-score are ill-defined and being set to 0.0 in labels with no true samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/matvieir/vit-vs-cnn/models/deit.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/opt/venv-gcc/lib/python3.7/site-packages/sklearn/metrics/_classification.py:1308: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/matvieir/opt/venv-gcc/lib/python3.7/site-packages/sklearn/metrics/_classification.py:1308: UndefinedMetricWarning: Recall and F-score are ill-defined and being set to 0.0 in labels with no true samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/matvieir/vit-vs-cnn/models/mlpmixer.py:16: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/opt/venv-gcc/lib/python3.7/site-packages/sklearn/metrics/_classification.py:1308: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/matvieir/opt/venv-gcc/lib/python3.7/site-packages/sklearn/metrics/_classification.py:1308: UndefinedMetricWarning: Recall and F-score are ill-defined and being set to 0.0 in labels with no true samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/matvieir/vit-vs-cnn/models/ecaresnet.py:14: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/opt/venv-gcc/lib/python3.7/site-packages/sklearn/metrics/_classification.py:1308: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/matvieir/opt/venv-gcc/lib/python3.7/site-packages/sklearn/metrics/_classification.py:1308: UndefinedMetricWarning: Recall and F-score are ill-defined and being set to 0.0 in labels with no true samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+Performing ID evaluation
+[389 299 148 ... 975 462 290]
+[389 299 148 ... 970 700 290]
+[755 788  93 ... 835 212 839]
+[755 788  93 ... 835 161 839]
+[450 560 717 ... 928 327 692]
+[450 560 717 ... 928 327 692]
+[ 78 891 232 ...  39 711 496]
+[ 78 891 231 ...  39 711 496]
+
+
+--------------- ResNet ----------------
+ID detection:
+    -Precision: 0.02862068965517241 
+    -Score: 0.0292 
+    -F1-score: 0.02885109599395314
+
+
+--------------- DeiT ----------------
+ID detection:
+    -Precision: 0.031320754716981127 
+    -Score: 0.0308 
+    -F1-score: 0.031031928735862274
+
+
+--------------- MLPMixer ----------------
+ID detection:
+    -Precision: 0.0276 
+    -Score: 0.0276 
+    -F1-score: 0.0276
+
+
+--------------- ECAResnet ----------------
+ID detection:
+    -Precision: 0.03272727272727272 
+    -Score: 0.03 
+    -F1-score: 0.03129633691599035
+FINISHED at Thu Dec 9 16:46:09 CET 2021
