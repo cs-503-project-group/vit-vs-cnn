@@ -101,9 +101,9 @@ def print_score_recall_f1(model_name, id_prc=None, id_recall=None, id_f1=None, o
     if run_ood:
         print(f'OOD detection:\n    -Precision: {ood_prc} \n    -Score: {ood_recall} \n    -F1-score: {ood_f1}')
 
-def save_to_pickle(list_of_variables_to_save):
-    for var in list_of_variables_to_save:
-        with open(f'pickles/{var}.pickle', 'wb') as f:
+def save_to_pickle(list_of_variables_to_save, list_of_variable_names_to_save):
+    for i, var in enumerate(list_of_variables_to_save):
+        with open(f'pickles/{list_of_variable_names_to_save[i]}.pickle', 'wb') as f:
             pickle.dump(var, f)
 
 def main(run_ood, run_id):
@@ -140,10 +140,10 @@ def main(run_ood, run_id):
         print_score_recall_f1('MLPMixer',  ood_mlpmixer_prc,  ood_mlpmixer_rec,  ood_mlpmixer_f1 , run_ood=True)
         print_score_recall_f1('ECAResNet', ood_ecaresnet_prc, ood_ecaresnet_rec, ood_ecaresnet_f1, run_ood=True)
 
-        save_to_pickle([ood_resnet_prc,    ood_resnet_rec,    ood_resnet_f1])
-        save_to_pickle([ood_deit_prc,      ood_deit_rec,      ood_deit_f1])
-        save_to_pickle([ood_mlpmixer_prc,  ood_mlpmixer_rec,  ood_mlpmixer_f1])
-        save_to_pickle([ood_ecaresnet_prc, ood_ecaresnet_rec, ood_ecaresnet_f1])
+        save_to_pickle([ood_resnet_prc,    ood_resnet_rec,    ood_resnet_f1],    ['ood_resnet_prc',    'ood_resnet_rec',    'ood_resnet_f1'])
+        save_to_pickle([ood_deit_prc,      ood_deit_rec,      ood_deit_f1],      ['ood_deit_prc',      'ood_deit_rec',      'ood_deit_f1'])
+        save_to_pickle([ood_mlpmixer_prc,  ood_mlpmixer_rec,  ood_mlpmixer_f1],  ['ood_mlpmixer_prc',  'ood_mlpmixer_rec',  'ood_mlpmixer_f1'])
+        save_to_pickle([ood_ecaresnet_prc, ood_ecaresnet_rec, ood_ecaresnet_f1], ['ood_ecaresnet_prc', 'ood_ecaresnet_rec', 'ood_ecaresnet_f1'])
 
     # --------- ID evaluation
     if run_id:
@@ -161,10 +161,10 @@ def main(run_ood, run_id):
         print_score_recall_f1('MLPMixer',  id_mlpmixer_prc,  id_mlpmixer_rec,  id_mlpmixer_f1,  run_id=True)
         print_score_recall_f1('ECAResnet', id_ecaresnet_prc, id_ecaresnet_rec, id_ecaresnet_f1, run_id=True)                    
 
-        save_to_pickle([id_resnet_prc,    id_resnet_rec,    id_resnet_f1])
-        save_to_pickle([id_deit_prc,      id_deit_rec,      id_deit_f1])
-        save_to_pickle([id_mlpmixer_prc,  id_mlpmixer_rec,  id_mlpmixer_f1])
-        save_to_pickle([id_ecaresnet_prc, id_ecaresnet_rec, id_ecaresnet_f1])
+        save_to_pickle([id_resnet_prc,    id_resnet_rec,    id_resnet_f1],    ['id_resnet_prc',    'id_resnet_rec',    'id_resnet_f1'])
+        save_to_pickle([id_deit_prc,      id_deit_rec,      id_deit_f1],      ['id_deit_prc',      'id_deit_rec',      'id_deit_f1'])
+        save_to_pickle([id_mlpmixer_prc,  id_mlpmixer_rec,  id_mlpmixer_f1],  ['id_mlpmixer_prc',  'id_mlpmixer_rec',  'id_mlpmixer_f1'])
+        save_to_pickle([id_ecaresnet_prc, id_ecaresnet_rec, id_ecaresnet_f1], ['id_ecaresnet_prc', 'id_ecaresnet_rec', 'id_ecaresnet_f1'])
 
 
 if __name__== '__main__':
