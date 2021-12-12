@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --chdir /home/matvieir/cs-503-logs
+#SBATCH --chdir /home/matvieir/vit-vs-cnn/
 
 #SBATCH --nodes 1
 

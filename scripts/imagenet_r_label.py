@@ -3,13 +3,13 @@ import pandas as pd
 from pathlib import Path
 import json
 
-ImagenetR_path = "../vit-vs-cnn/data/imagenet-r/"
-json_file_path = Path("../vit-vs-cnn/classes_imagenet/imagenet_r.json")
+ImagenetR_path = "/home/mamooler/vit-vs-cnn/data/imagenet-r/"
+json_file_path = Path("/home/mamooler/vit-vs-cnn/classes_imagenet/imagenet_r.json")
 
 data_dict = {}
 
-categories = open('../vit-vs-cnn/classes_imagenet/classes_in_imagenet_1k.txt', 'r')
-indices = open('../vit-vs-cnn/classes_imagenet/imagenet1000_clsidx_to_labels.txt', 'r')
+categories = open('/home/mamooler/vit-vs-cnn/classes_imagenet/classes_in_imagenet_1k.txt', 'r')
+indices = open('/home/mamooler/vit-vs-cnn/classes_imagenet/imagenet1000_clsidx_to_labels.txt', 'r')
 label2idx = {}
 cat2idx = {}
 categories = categories.readlines()
