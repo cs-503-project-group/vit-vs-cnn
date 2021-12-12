@@ -8,6 +8,7 @@ class MLPMixer(nn.Module):
         
         self.mlpmixer = timm.create_model('mixer_b16_224', pretrained=True)
         self.softmax = nn.Softmax()
+        self.name = 'MLPMixer'
     
     
     def forward(self, image):

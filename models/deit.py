@@ -10,6 +10,7 @@ class DeiT(nn.Module):
         # deit.load_state_dict(ckpt) 
         self.deit = timm.create_model('deit_small_patch16_224', pretrained=True)
         self.softmax = nn.Softmax()
+        self.name = 'DeiT'
         
     
     def forward(self, image):

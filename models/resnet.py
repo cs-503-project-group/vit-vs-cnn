@@ -10,6 +10,7 @@ class ResNet(nn.Module):
         # resnet.load_state_dict(ckpt)
         self.resnet = timm.create_model('resnet50', pretrained=True) 
         self.softmax = nn.Softmax()
+        self.name = 'ResNet'
     
     
     def forward(self, image):
