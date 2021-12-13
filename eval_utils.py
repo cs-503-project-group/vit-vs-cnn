@@ -12,12 +12,12 @@ def print_score_recall_f1(model_name, id_prc=None, id_recall=None, id_f1=None, o
         print(f'OOD detection:\n    -Precision: {ood_prc} \n    -Score: {ood_recall} \n    -F1-score: {ood_f1}')
 
 
-def evaluate_OOD_detection(model, dataloader, thresholds, device, num_classes=1000, batch_size=1):
+def evaluate_OOD_detection(model, dataloader, thresholds, device, num_classes=1000, batch_size=8):
     probs = np.zeros((batch_size, num_classes))
     targets = np.zeros((batch_size, 1))
     if torch.cuda.device_count() > 1:
         print("Let's use", torch.cuda.device_count(), "GPUs!")
-        model = nn.DataParallel(model)
+        model = torch.nn.DataParallel(model)
     model.to(device)
     model.eval()
     with torch.no_grad():
@@ -43,24 +43,26 @@ def evaluate_OOD_detection(model, dataloader, thresholds, device, num_classes=10
         precisions[ind] = prc
         recalls[ind] = rec
         f1_scores[ind] = f1
-
+    
     return precisions, recalls, f1_scores
 
 
-def evaluate_ID_detection(model, dataloader, device, num_classes=1000, batch_size=1):
+def evaluate_ID_detection(model, dataloader, device, num_classes=1000, batch_size=8):
     probs = np.zeros((batch_size, num_classes))
     targets = np.zeros((batch_size, 1))
+    model_name = model.name
     if torch.cuda.device_count() > 1:
         print("Let's use", torch.cuda.device_count(), "GPUs!")
-        model = nn.DataParallel(model)
+        model = torch.nn.DataParallel(model)
     model.to(device)
     model.eval()
     target_classes = []
     with torch.no_grad():
         for ind, batch in enumerate(dataloader):
             inputs, batch_target = batch[0].cuda(), batch[1]
-            if batch_target not in target_classes:
-                target_classes.append(batch_target.item())
+            for t in batch_target:
+                if t not in target_classes:
+                    target_classes.append(t)
             inputs.to(device) 
             batch_probs = model(inputs)
             if ind == 0:
@@ -72,7 +74,7 @@ def evaluate_ID_detection(model, dataloader, device, num_classes=1000, batch_siz
             if ind % 5000 == 0:
                 preds = np.argmax(probs, axis=1)
                 prc, rec, f1, _ = precision_recall_fscore_support(targets, preds, labels=target_classes, average='macro')
-                print_score_recall_f1(model_name=model.name, id_prc=prc, id_recall=rec, id_f1=f1, run_id=True)
+                print_score_recall_f1(model_name=model_name, id_prc=prc, id_recall=rec, id_f1=f1, run_id=True)
     preds = np.argmax(probs, axis=1) 
     print(preds)
     print(targets)
