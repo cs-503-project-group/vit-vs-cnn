@@ -20,12 +20,12 @@ class Image_Dataset(Dataset):
 
         # Add ID images to data: [img_name, 0] -- 0 means ID
         folder = os.listdir(self.id_data_dir)[0]
-        for file in os.listdir(self.id_data_dir + folder)[:2]:
+        for file in os.listdir(self.id_data_dir + folder):
             self.data.append((self.id_data_dir + folder + '/' + file, 0))
 
         # Add OOD images to data: [img_name, 1] -- 1 means OOD
-        for folder in os.listdir(self.ood_data_dir)[:5]:
-            for file in os.listdir(self.ood_data_dir + folder)[:2]:
+        for folder in os.listdir(self.ood_data_dir):
+            for file in os.listdir(self.ood_data_dir + folder):
                 self.data.append((self.ood_data_dir + folder + '/' + file, 1))
 
     def __getitem__(self, idx):
@@ -79,7 +79,7 @@ class MultiDomain_Dataset(Dataset):
 
         # Add MD images to data [img_name, gt_label]
         for folder in os.listdir(self.md_data_dir):
-            for file in os.listdir(self.md_data_dir + folder)[:10]:
+            for file in os.listdir(self.md_data_dir + folder):
                 if folder+"/"+file in self.gt_labels:
                     gt_label = self.gt_labels[folder+"/"+file]
                     if gt_label not in self.classes:
@@ -100,20 +100,20 @@ class MultiDomain_Dataset(Dataset):
 def print_score_recall_f1(model_name, id_prc=None, id_recall=None, id_f1=None, ood_prc=None, ood_recall=None, ood_f1=None, run_id=False, run_ood=False):
     print(f'\n\n--------------- {model_name} ----------------')
     if run_id:
-        print(f'ID detection:\n    -Precision: {id_prc} \n    -Score: {id_recall} \n    -F1-score: {id_f1}')
+        print(f'ID detection:\n    -Precision: {id_prc} \n    -Recall: {id_recall} \n    -F1-score: {id_f1}')
     if run_ood:
-        print(f'OOD detection:\n    -Precision: {ood_prc} \n    -Score: {ood_recall} \n    -F1-score: {ood_f1}')
+        print(f'OOD detection:\n    -Precision: {ood_prc} \n    -Recall: {ood_recall} \n    -F1-score: {ood_f1}')
 
 def save_to_pickle(list_of_variables_to_save, list_of_variable_names_to_save):
     for i, var in enumerate(list_of_variables_to_save):
-        with open(f'pickles/{list_of_variable_names_to_save[i]}.pickle', 'wb') as f:
+        with open(f'../vit-vs-cnn/pickles/{list_of_variable_names_to_save[i]}.pickle', 'wb') as f:
             pickle.dump(var, f)
 
-def main(run_ood, run_id):
+def main(run_ood, run_id, non_semantic):
     device = 'cuda' if cuda.is_available() else 'cpu'
-    ood_data_dir = 'data/OOD_data/'
-    id_data_dir = 'data/ID_data/'
-    md_data_dir = 'data/imagenet-r/'
+    ood_data_dir = '../vit-vs-cnn/data/OOD_data/'
+    id_data_dir = '../vit-vs-cnn/data/ID_data/'
+    md_data_dir = '../vit-vs-cnn/data/imagenet-r/'
 
     ori_preprocess = Compose([
             Resize((224), interpolation=Image.BICUBIC),
@@ -135,13 +135,14 @@ def main(run_ood, run_id):
             dataset = Image_Dataset(id_data_dir, ood_data_dir, transform=ori_preprocess)
 
         data_loader = DataLoader(dataset, batch_size=1, shuffle=True)
-        thresholds = np.arange(0.5, 0.9, step=0.1)
+        thresholds = np.arange(0.1, 0.9, step=0.1)
 
         ood_resnet_prc, ood_resnet_rec, ood_resnet_f1 =          evaluate_OOD_detection(resnet_model,    data_loader, thresholds, device)
         ood_deit_prc, ood_deit_rec, ood_deit_f1 =                evaluate_OOD_detection(deit_model,      data_loader, thresholds, device)
         ood_mlpmixer_prc, ood_mlpmixer_rec, ood_mlpmixer_f1 =    evaluate_OOD_detection(mlpmixer_model,  data_loader, thresholds, device)
         ood_ecaresnet_prc, ood_ecaresnet_rec, ood_ecaresnet_f1 = evaluate_OOD_detection(ecaresnet_model, data_loader, thresholds, device)
 
+       
         print_score_recall_f1('ResNet',    ood_resnet_prc,    ood_resnet_rec,    ood_resnet_f1,    run_ood=True)
         print_score_recall_f1('DeiT',      ood_deit_prc,      ood_deit_rec,      ood_deit_f1,      run_ood=True)
         print_score_recall_f1('MLPMixer',  ood_mlpmixer_prc,  ood_mlpmixer_rec,  ood_mlpmixer_f1 , run_ood=True)
@@ -154,7 +155,8 @@ def main(run_ood, run_id):
 
     # --------- ID evaluation
     if run_id:
-         if non_semantic:
+
+        if non_semantic:
             print('Performing ID evaluation for non semantic shifts')
             imagenet_data = MultiDomain_Dataset(md_data_dir, transform=ori_preprocess)
         else:
@@ -180,4 +182,4 @@ def main(run_ood, run_id):
 
 
 if __name__== '__main__':
-    main(run_id=True, run_ood=False, non_semantic=True)
+    main(run_id=False, run_ood=True, non_semantic=True)
