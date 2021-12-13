@@ -1,0 +1,7 @@
+numpy
+torchvision
+torch
+timm
+sklearn
+matplotlib
+prettytable
