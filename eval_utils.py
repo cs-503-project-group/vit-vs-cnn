@@ -15,6 +15,9 @@ def print_score_recall_f1(model_name, id_prc=None, id_recall=None, id_f1=None, o
 def evaluate_OOD_detection(model, dataloader, thresholds, device, num_classes=1000, batch_size=1):
     probs = np.zeros((batch_size, num_classes))
     targets = np.zeros((batch_size, 1))
+    if torch.cuda.device_count() > 1:
+        print("Let's use", torch.cuda.device_count(), "GPUs!")
+        model = nn.DataParallel(model)
     model.to(device)
     model.eval()
     with torch.no_grad():
@@ -45,6 +48,9 @@ def evaluate_OOD_detection(model, dataloader, thresholds, device, num_classes=10
 def evaluate_ID_detection(model, dataloader, device, num_classes=1000, batch_size=1):
     probs = np.zeros((batch_size, num_classes))
     targets = np.zeros((batch_size, 1))
+    if torch.cuda.device_count() > 1:
+        print("Let's use", torch.cuda.device_count(), "GPUs!")
+        model = nn.DataParallel(model)
     model.to(device)
     model.eval()
     # target_classes = []
