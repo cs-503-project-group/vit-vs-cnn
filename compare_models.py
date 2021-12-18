@@ -21,12 +21,12 @@ class Image_Dataset(Dataset):
         # Add ID images to data: [img_name, 0] -- 0 means ID
         folder = os.listdir(self.id_data_dir)[0]
         for file in os.listdir(self.id_data_dir + folder):
-            self.data.append((self.id_data_dir + folder + '/' + file, 0))
+            self.data.append((self.id_data_dir + folder + '/' + file, 1))
 
         # Add OOD images to data: [img_name, 1] -- 1 means OOD
         for folder in os.listdir(self.ood_data_dir):
             for file in os.listdir(self.ood_data_dir + folder):
-                self.data.append((self.ood_data_dir + folder + '/' + file, 1))
+                self.data.append((self.ood_data_dir + folder + '/' + file, 0))
 
     def __getitem__(self, idx):
         img_path, target = self.data[idx]
@@ -137,24 +137,23 @@ def main(run_ood, run_id, non_semantic):
         else:
             dataset = Image_Dataset(id_data_dir, ood_data_dir, transform=ori_preprocess)
 
-        data_loader = DataLoader(dataset, batch_size=8, shuffle=True)
+        data_loader = DataLoader(dataset, batch_size=1, shuffle=True)
         thresholds = np.arange(0.1, 0.9, step=0.1)
 
-        ood_resnet_prc, ood_resnet_rec, ood_resnet_f1 =          evaluate_OOD_detection(resnet_model,    data_loader, thresholds, device)
-        ood_deit_prc, ood_deit_rec, ood_deit_f1 =                evaluate_OOD_detection(deit_model,      data_loader, thresholds, device)
-        ood_mlpmixer_prc, ood_mlpmixer_rec, ood_mlpmixer_f1 =    evaluate_OOD_detection(mlpmixer_model,  data_loader, thresholds, device)
-        ood_ecaresnet_prc, ood_ecaresnet_rec, ood_ecaresnet_f1 = evaluate_OOD_detection(ecaresnet_model, data_loader, thresholds, device)
+        evaluate_OOD_detection(resnet_model,    data_loader, thresholds, device, color='r')
+        evaluate_OOD_detection(deit_model,      data_loader, thresholds, device, color='b')
+        evaluate_OOD_detection(mlpmixer_model,  data_loader, thresholds, device, color='g')
+        evaluate_OOD_detection(ecaresnet_model, data_loader, thresholds, device, color='c')
 
-       
-        print_score_recall_f1('ResNet',    ood_prc=ood_resnet_prc,    ood_recall=ood_resnet_rec,    ood_f1=ood_resnet_f1,    run_ood=True)
-        print_score_recall_f1('DeiT',      ood_prc=ood_deit_prc,      ood_recall=ood_deit_rec,      ood_f1=ood_deit_f1,      run_ood=True)
-        print_score_recall_f1('MLPMixer',  ood_prc=ood_mlpmixer_prc,  ood_recall=ood_mlpmixer_rec,  ood_f1=ood_mlpmixer_f1 , run_ood=True)
-        print_score_recall_f1('ECAResNet', ood_prc=ood_ecaresnet_prc, ood_recall=ood_ecaresnet_rec, ood_f1=ood_ecaresnet_f1, run_ood=True)
+        # print_score_recall_f1('ResNet',    ood_prc=ood_resnet_prc,    ood_recall=ood_resnet_rec,    ood_f1=ood_resnet_f1,    run_ood=True)
+        # print_score_recall_f1('DeiT',      ood_prc=ood_deit_prc,      ood_recall=ood_deit_rec,      ood_f1=ood_deit_f1,      run_ood=True)
+        # print_score_recall_f1('MLPMixer',  ood_prc=ood_mlpmixer_prc,  ood_recall=ood_mlpmixer_rec,  ood_f1=ood_mlpmixer_f1 , run_ood=True)
+        # print_score_recall_f1('ECAResNet', ood_prc=ood_ecaresnet_prc, ood_recall=ood_ecaresnet_rec, ood_f1=ood_ecaresnet_f1, run_ood=True)
 
-        save_to_pickle([ood_resnet_prc,    ood_resnet_rec,    ood_resnet_f1],    ['ood_resnet_prc',    'ood_resnet_rec',    'ood_resnet_f1'], non_semantic=non_semantic)
-        save_to_pickle([ood_deit_prc,      ood_deit_rec,      ood_deit_f1],      ['ood_deit_prc',      'ood_deit_rec',      'ood_deit_f1'], non_semantic=non_semantic)
-        save_to_pickle([ood_mlpmixer_prc,  ood_mlpmixer_rec,  ood_mlpmixer_f1],  ['ood_mlpmixer_prc',  'ood_mlpmixer_rec',  'ood_mlpmixer_f1'], non_semantic=non_semantic)
-        save_to_pickle([ood_ecaresnet_prc, ood_ecaresnet_rec, ood_ecaresnet_f1], ['ood_ecaresnet_prc', 'ood_ecaresnet_rec', 'ood_ecaresnet_f1'], non_semantic=non_semantic)
+        # save_to_pickle([ood_resnet_prc,    ood_resnet_rec,    ood_resnet_f1],    ['ood_resnet_prc',    'ood_resnet_rec',    'ood_resnet_f1'], non_semantic=non_semantic)
+        # save_to_pickle([ood_deit_prc,      ood_deit_rec,      ood_deit_f1],      ['ood_deit_prc',      'ood_deit_rec',      'ood_deit_f1'], non_semantic=non_semantic)
+        # save_to_pickle([ood_mlpmixer_prc,  ood_mlpmixer_rec,  ood_mlpmixer_f1],  ['ood_mlpmixer_prc',  'ood_mlpmixer_rec',  'ood_mlpmixer_f1'], non_semantic=non_semantic)
+        # save_to_pickle([ood_ecaresnet_prc, ood_ecaresnet_rec, ood_ecaresnet_f1], ['ood_ecaresnet_prc', 'ood_ecaresnet_rec', 'ood_ecaresnet_f1'], non_semantic=non_semantic)
 
     # --------- ID evaluation
     if run_id:
@@ -185,4 +184,4 @@ def main(run_ood, run_id, non_semantic):
 
 
 if __name__== '__main__':
-    main(run_id=False, run_ood=True, non_semantic=True)
+    main(run_id=False, run_ood=True, non_semantic=False)
