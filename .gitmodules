@@ -1,0 +1,3 @@
+[submodule "temperature_scaling"]
+	path = temperature_scaling
+	url = https://github.com/cs-503-project-group/temperature_scaling.git
