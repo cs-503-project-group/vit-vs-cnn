@@ -112,7 +112,7 @@ def save_to_pickle(list_of_variables_to_save, list_of_variable_names_to_save, no
         with open(f'../vit-vs-cnn/pickles/{file_name}.pickle', 'wb') as f:
             pickle.dump(var, f)
 
-def main(run_ood, run_id, non_semantic):
+def main(run_ood, run_id, non_semantic, tmp_scale, entropy):
     device = 'cuda' if cuda.is_available() else 'cpu'
     ood_data_dir = '../vit-vs-cnn/data/OOD_data/'
     id_data_dir = '../vit-vs-cnn/data/ID_data/'
@@ -137,13 +137,13 @@ def main(run_ood, run_id, non_semantic):
         else:
             dataset = Image_Dataset(id_data_dir, ood_data_dir, transform=ori_preprocess)
 
-        data_loader = DataLoader(dataset, batch_size=8, shuffle=True)
-        thresholds = np.arange(0.1, 0.9, step=0.1)
+        data_loader = DataLoader(dataset, batch_size=16, shuffle=True)
+        thresholds = np.arange(0.1, 1.0, step=0.1)
 
-        ood_resnet_prc, ood_resnet_rec, ood_resnet_f1 =          evaluate_OOD_detection(resnet_model,    data_loader, thresholds, device)
-        ood_deit_prc, ood_deit_rec, ood_deit_f1 =                evaluate_OOD_detection(deit_model,      data_loader, thresholds, device)
-        ood_mlpmixer_prc, ood_mlpmixer_rec, ood_mlpmixer_f1 =    evaluate_OOD_detection(mlpmixer_model,  data_loader, thresholds, device)
-        ood_ecaresnet_prc, ood_ecaresnet_rec, ood_ecaresnet_f1 = evaluate_OOD_detection(ecaresnet_model, data_loader, thresholds, device)
+        ood_resnet_prc, ood_resnet_rec, ood_resnet_f1 =          evaluate_OOD_detection(resnet_model,    data_loader, thresholds, device, tmp_scale=tmp_scale, use_entropy=entropy)
+        ood_deit_prc, ood_deit_rec, ood_deit_f1 =                evaluate_OOD_detection(deit_model,      data_loader, thresholds, device, tmp_scale=tmp_scale, use_entropy=entropy)
+        ood_mlpmixer_prc, ood_mlpmixer_rec, ood_mlpmixer_f1 =    evaluate_OOD_detection(mlpmixer_model,  data_loader, thresholds, device, tmp_scale=tmp_scale, use_entropy=entropy)
+        ood_ecaresnet_prc, ood_ecaresnet_rec, ood_ecaresnet_f1 = evaluate_OOD_detection(ecaresnet_model, data_loader, thresholds, device, tmp_scale=tmp_scale, use_entropy=entropy)
 
        
         print_score_recall_f1('ResNet',    ood_prc=ood_resnet_prc,    ood_recall=ood_resnet_rec,    ood_f1=ood_resnet_f1,    run_ood=True)
@@ -166,7 +166,7 @@ def main(run_ood, run_id, non_semantic):
             print('Performing ID evaluation')
             imagenet_data = ImageNet(root='data/imagenet-val', split='val', transform=ori_preprocess)
             
-        data_loader_ID = DataLoader(imagenet_data, batch_size=8, shuffle=True)
+        data_loader_ID = DataLoader(imagenet_data, batch_size=16, shuffle=True)
 
         id_resnet_prc, id_resnet_rec, id_resnet_f1 =          evaluate_ID_detection(resnet_model,    data_loader_ID, device)
         id_deit_prc, id_deit_rec, id_deit_f1 =                evaluate_ID_detection(deit_model,      data_loader_ID, device)
@@ -185,4 +185,4 @@ def main(run_ood, run_id, non_semantic):
 
 
 if __name__== '__main__':
-    main(run_id=False, run_ood=True, non_semantic=True)
+    main(run_id=False, run_ood=True, non_semantic=False, tmp_scale=None, entropy=True)
