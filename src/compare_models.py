@@ -41,34 +41,6 @@ class Image_Dataset(Dataset):
         return len(self.data)
 
 
-class Image_Dataset_ID(Dataset):
-    def __init__(self, id_data_dir):
-        self.id_data_dir = id_data_dir
-        self.data = []
-        self.classes = [] # what is this for?
-        # Load ground truth labels
-        with open('../vit-vs-cnn/classes_imagenet/ground_truth_labels_validation_1k.json') as f_in:
-            self.gt_labels = json.load(f_in)
-
-        # Add ID images to data [img_name, gt_label]
-        folder = os.listdir(self.id_data_dir)[0]
-        for file in os.listdir(self.id_data_dir + folder)[:10]:
-            gt_label = self.gt_labels[file[:-5]]
-            if gt_label not in self.classes:
-                self.classes.append(gt_label)
-            self.data.append((self.id_data_dir + folder + '/' + file, gt_label))
-
-    def __getitem__(self, idx):
-        img_path, target = self.data[idx]
-        with Image.open(img_path).convert('RGB') as im:
-            img = ori_preprocess(im) # why pre-process? why this way?
-
-        return img, target
-
-    def __len__(self):
-        return len(self.data)
-
-
 class MultiDomain_Dataset(Dataset):
     def __init__(self, md_data_dir, transform):
         self.md_data_dir = md_data_dir
@@ -128,7 +100,6 @@ def main(run_ood, run_id, non_semantic, tmp_scale, entropy):
     # --------- Models
     resnet_model = resnet.ResNet().to(device)
     deit_model = deit.DeiT().to(device)
-    # convmixer_model = convmixer.ConvMixer().to(device)
     mlpmixer_model = mlpmixer.MLPMixer().to(device)
     ecaresnet_model = ecaresnet.ECAResNet().to(device)
 
@@ -149,17 +120,6 @@ def main(run_ood, run_id, non_semantic, tmp_scale, entropy):
         evaluate_OOD_detection(ecaresnet_model, data_loader, thresholds, device, non_semantic=non_semantic, tmp_scale=tmp_scale, use_entropy=entropy)
         
 
-       
-        # print_score_recall_f1('ResNet',    ood_prc=ood_resnet_prc,    ood_recall=ood_resnet_rec,    ood_f1=ood_resnet_f1,    run_ood=True)
-        # print_score_recall_f1('DeiT',      ood_prc=ood_deit_prc,      ood_recall=ood_deit_rec,      ood_f1=ood_deit_f1,      run_ood=True)
-        # print_score_recall_f1('MLPMixer',  ood_prc=ood_mlpmixer_prc,  ood_recall=ood_mlpmixer_rec,  ood_f1=ood_mlpmixer_f1 , run_ood=True)
-        # print_score_recall_f1('ECAResNet', ood_prc=ood_ecaresnet_prc, ood_recall=ood_ecaresnet_rec, ood_f1=ood_ecaresnet_f1, run_ood=True)
-
-        # save_to_pickle([ood_resnet_prc,    ood_resnet_rec,    ood_resnet_f1],    ['ood_resnet_prc',    'ood_resnet_rec',    'ood_resnet_f1'], non_semantic=non_semantic)
-        # save_to_pickle([ood_deit_prc,      ood_deit_rec,      ood_deit_f1],      ['ood_deit_prc',      'ood_deit_rec',      'ood_deit_f1'], non_semantic=non_semantic)
-        # save_to_pickle([ood_mlpmixer_prc,  ood_mlpmixer_rec,  ood_mlpmixer_f1],  ['ood_mlpmixer_prc',  'ood_mlpmixer_rec',  'ood_mlpmixer_f1'], non_semantic=non_semantic)
-        # save_to_pickle([ood_ecaresnet_prc, ood_ecaresnet_rec, ood_ecaresnet_f1], ['ood_ecaresnet_prc', 'ood_ecaresnet_rec', 'ood_ecaresnet_f1'], non_semantic=non_semantic)
-
     # --------- ID evaluation
     if run_id:
 
@@ -179,7 +139,7 @@ def main(run_ood, run_id, non_semantic, tmp_scale, entropy):
         id_mlpmixer_prc, id_mlpmixer_rec, id_mlpmixer_f1 =    evaluate_ID_detection(mlpmixer_model,  data_loader_ID, device)
         id_ecaresnet_prc, id_ecaresnet_rec, id_ecaresnet_f1 = evaluate_ID_detection(ecaresnet_model, data_loader_ID, device)
 
-        res_dict = {"model": [mlp_mixer.name, resnet_model.name, ecaresnet_model.name, deit_model.name],
+        res_dict = {"model": [mlpmixer_model.name, resnet_model.name, ecaresnet_model.name, deit_model.name],
                     "precision": [id_mlpmixer_prc, id_resnet_prc, id_ecaresnet_prc, id_deit_prc],
                     "recall": [id_mlpmixer_rec, id_resnet_rec, id_ecaresnet_rec, id_deit_rec],
                     "f1 score": [id_mlpmixer_f1, id_resnet_f1, id_ecaresnet_f1, id_deit_f1]}
