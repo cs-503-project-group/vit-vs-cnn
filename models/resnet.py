@@ -9,12 +9,16 @@ class ResNet(nn.Module):
         # ckpt = torch.load(f"{model_ckpt}")
         # resnet.load_state_dict(ckpt)
         self.resnet = timm.create_model('resnet50', pretrained=True) 
-        self.softmax = nn.Softmax()
+        self.softmax = nn.Softmax(dim=1)
         self.name = 'ResNet'
     
     
-    def forward(self, image):
+    def forward(self, image, tmp_scale=None):
         logits = self.resnet(image)
-        probs = self.softmax(logits)
+
+        if tmp_scale:
+            probs = self.softmax(logits/tmp_scale)
+        else:
+            probs = self.softmax(logits)
         
         return probs

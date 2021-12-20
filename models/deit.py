@@ -9,12 +9,16 @@ class DeiT(nn.Module):
         # ckpt = torch.load(f"checkpoints/{model_ckpt}")
         # deit.load_state_dict(ckpt) 
         self.deit = timm.create_model('deit_small_patch16_224', pretrained=True)
-        self.softmax = nn.Softmax()
+        self.softmax = nn.Softmax(dim=1)
         self.name = 'DeiT'
         
     
-    def forward(self, image):
+    def forward(self, image, tmp_scale=None):
         logits = self.deit(image)
-        probs = self.softmax(logits)
+
+        if tmp_scale:
+            probs = self.softmax(logits/tmp_scale)
+        else:
+            probs = self.softmax(logits)
         
         return probs
