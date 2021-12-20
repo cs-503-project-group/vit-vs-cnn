@@ -1,3 +1,423 @@
 fidis i13
 STARTING AT Sun Dec 12 10:37:11 CET 2021
 /home/matvieir/vit-vs-cnn
+/home/matvieir/opt/venv-gcc/lib/python3.7/site-packages/torchvision/transforms/transforms.py:281: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  "Argument interpolation should be of type InterpolationMode instead of int. "
+/home/matvieir/vit-vs-cnn/models/resnet.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/resnet.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/opt/venv-gcc/lib/python3.7/site-packages/sklearn/metrics/_classification.py:1308: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/matvieir/vit-vs-cnn/models/resnet.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/resnet.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/resnet.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/resnet.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/resnet.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/resnet.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/resnet.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/resnet.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/resnet.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/deit.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/deit.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/opt/venv-gcc/lib/python3.7/site-packages/sklearn/metrics/_classification.py:1308: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/matvieir/vit-vs-cnn/models/deit.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/opt/venv-gcc/lib/python3.7/site-packages/sklearn/metrics/_classification.py:1308: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/matvieir/vit-vs-cnn/models/deit.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/deit.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/deit.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/deit.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/deit.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/deit.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/deit.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/deit.py:18: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/mlpmixer.py:16: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/mlpmixer.py:16: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/opt/venv-gcc/lib/python3.7/site-packages/sklearn/metrics/_classification.py:1308: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/matvieir/vit-vs-cnn/models/mlpmixer.py:16: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/opt/venv-gcc/lib/python3.7/site-packages/sklearn/metrics/_classification.py:1308: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/matvieir/vit-vs-cnn/models/mlpmixer.py:16: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/mlpmixer.py:16: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/mlpmixer.py:16: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/mlpmixer.py:16: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/mlpmixer.py:16: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/mlpmixer.py:16: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/mlpmixer.py:16: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/mlpmixer.py:16: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/ecaresnet.py:14: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/ecaresnet.py:14: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/opt/venv-gcc/lib/python3.7/site-packages/sklearn/metrics/_classification.py:1308: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/matvieir/vit-vs-cnn/models/ecaresnet.py:14: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/ecaresnet.py:14: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/ecaresnet.py:14: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/ecaresnet.py:14: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/ecaresnet.py:14: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/ecaresnet.py:14: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/ecaresnet.py:14: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/ecaresnet.py:14: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+/home/matvieir/vit-vs-cnn/models/ecaresnet.py:14: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  probs = self.softmax(logits)
+Performing ID evaluation
+
+
+--------------- ResNet ----------------
+ID detection:
+    -Precision: 1.0 
+    -Score: 1.0 
+    -F1-score: 1.0
+
+
+--------------- ResNet ----------------
+ID detection:
+    -Precision: 0.7652143296006475 
+    -Score: 0.7496379151811748 
+    -F1-score: 0.7342958171883472
+
+
+--------------- ResNet ----------------
+ID detection:
+    -Precision: 0.761820697295107 
+    -Score: 0.7499685529769508 
+    -F1-score: 0.7403618567861929
+
+
+--------------- ResNet ----------------
+ID detection:
+    -Precision: 0.7586652640515245 
+    -Score: 0.745733873994718 
+    -F1-score: 0.739497517481306
+
+
+--------------- ResNet ----------------
+ID detection:
+    -Precision: 0.7620543911151179 
+    -Score: 0.7485777584807289 
+    -F1-score: 0.7443330687256675
+
+
+--------------- ResNet ----------------
+ID detection:
+    -Precision: 0.7636728258475223 
+    -Score: 0.7504517706583872 
+    -F1-score: 0.7466006589749425
+
+
+--------------- ResNet ----------------
+ID detection:
+    -Precision: 0.7627206726832173 
+    -Score: 0.749222345993647 
+    -F1-score: 0.7457617819597081
+
+
+--------------- ResNet ----------------
+ID detection:
+    -Precision: 0.7615581263581183 
+    -Score: 0.7482715484670132 
+    -F1-score: 0.7452316850286366
+
+
+--------------- ResNet ----------------
+ID detection:
+    -Precision: 0.7621176728543461 
+    -Score: 0.748798149357048 
+    -F1-score: 0.746216304575656
+
+
+--------------- ResNet ----------------
+ID detection:
+    -Precision: 0.7624673538088191 
+    -Score: 0.7496629797221916 
+    -F1-score: 0.7470710605890901
+[121 459 758 ... 393 551  16]
+[121 445 758 ... 393 924  16]
+
+
+--------------- DeiT ----------------
+ID detection:
+    -Precision: 1.0 
+    -Score: 1.0 
+    -F1-score: 1.0
+
+
+--------------- DeiT ----------------
+ID detection:
+    -Precision: 0.7691103881615929 
+    -Score: 0.7663107697746252 
+    -F1-score: 0.7457733622403846
+
+
+--------------- DeiT ----------------
+ID detection:
+    -Precision: 0.7714084693479895 
+    -Score: 0.7662809571963984 
+    -F1-score: 0.7554789301933353
+
+
+--------------- DeiT ----------------
+ID detection:
+    -Precision: 0.7765623671134202 
+    -Score: 0.7687111076272606 
+    -F1-score: 0.7610276195890374
+
+
+--------------- DeiT ----------------
+ID detection:
+    -Precision: 0.7756094415329883 
+    -Score: 0.7675389597981956 
+    -F1-score: 0.7616972339818127
+
+
+--------------- DeiT ----------------
+ID detection:
+    -Precision: 0.7763719037541993 
+    -Score: 0.7691051192277162 
+    -F1-score: 0.7640261795054104
+
+
+--------------- DeiT ----------------
+ID detection:
+    -Precision: 0.7760120068771902 
+    -Score: 0.7691192574523983 
+    -F1-score: 0.7643870973930147
+
+
+--------------- DeiT ----------------
+ID detection:
+    -Precision: 0.775797301437923 
+    -Score: 0.7691681244822038 
+    -F1-score: 0.7648756760544699
+
+
+--------------- DeiT ----------------
+ID detection:
+    -Precision: 0.775478477241172 
+    -Score: 0.7684590247811268 
+    -F1-score: 0.7646185739734312
+
+
+--------------- DeiT ----------------
+ID detection:
+    -Precision: 0.7758561958381999 
+    -Score: 0.76918325041138 
+    -F1-score: 0.7655411583798766
+[200 109 989 ... 470 532 913]
+[200 109 989 ... 470 762 913]
+
+
+--------------- MLPMixer ----------------
+ID detection:
+    -Precision: 1.0 
+    -Score: 1.0 
+    -F1-score: 1.0
+
+
+--------------- MLPMixer ----------------
+ID detection:
+    -Precision: 0.7616991366991367 
+    -Score: 0.7577180354958133 
+    -F1-score: 0.7374001872622145
+
+
+--------------- MLPMixer ----------------
+ID detection:
+    -Precision: 0.759736074529186 
+    -Score: 0.7563421974267562 
+    -F1-score: 0.7459030263656111
+
+
+--------------- MLPMixer ----------------
+ID detection:
+    -Precision: 0.7627852401201796 
+    -Score: 0.7578671969818742 
+    -F1-score: 0.7512864652491124
+
+
+--------------- MLPMixer ----------------
+ID detection:
+    -Precision: 0.7621856840017622 
+    -Score: 0.758091756450981 
+    -F1-score: 0.7527838996496694
+
+
+--------------- MLPMixer ----------------
+ID detection:
+    -Precision: 0.762550450014709 
+    -Score: 0.7581335489173786 
+    -F1-score: 0.754008602953101
+
+
+--------------- MLPMixer ----------------
+ID detection:
+    -Precision: 0.7626843657439428 
+    -Score: 0.7576310021261433 
+    -F1-score: 0.7544292459393489
+
+
+--------------- MLPMixer ----------------
+ID detection:
+    -Precision: 0.7608363544563546 
+    -Score: 0.7565183573373893 
+    -F1-score: 0.7534743200734602
+
+
+--------------- MLPMixer ----------------
+ID detection:
+    -Precision: 0.7606061434384968 
+    -Score: 0.7567506412283729 
+    -F1-score: 0.7539246678839245
+
+
+--------------- MLPMixer ----------------
+ID detection:
+    -Precision: 0.7611531219796659 
+    -Score: 0.7571792278187851 
+    -F1-score: 0.7546408441128394
+[732 150  52 ... 605 999 925]
+[732 150  52 ... 605 599 813]
+
+
+--------------- ECAResNet ----------------
+ID detection:
+    -Precision: 1.0 
+    -Score: 1.0 
+    -F1-score: 1.0
+
+
+--------------- ECAResNet ----------------
+ID detection:
+    -Precision: 0.8035766236672581 
+    -Score: 0.8001888650680191 
+    -F1-score: 0.7832100064057437
+
+
+--------------- ECAResNet ----------------
+ID detection:
+    -Precision: 0.8039751609716393 
+    -Score: 0.7982472935561171 
+    -F1-score: 0.7895919062192469
+
+
+--------------- ECAResNet ----------------
+ID detection:
+    -Precision: 0.8024182755304002 
+    -Score: 0.7968751382766812 
+    -F1-score: 0.7913855553234368
+
+
+--------------- ECAResNet ----------------
+ID detection:
+    -Precision: 0.8017783472595462 
+    -Score: 0.795401721786082 
+    -F1-score: 0.7919592927284604
+
+
+--------------- ECAResNet ----------------
+ID detection:
+    -Precision: 0.8008061872264362 
+    -Score: 0.7946865090568718 
+    -F1-score: 0.7916934605702648
+
+
+--------------- ECAResNet ----------------
+ID detection:
+    -Precision: 0.8026084714089343 
+    -Score: 0.7965036364551974 
+    -F1-score: 0.793756401644913
+
+
+--------------- ECAResNet ----------------
+ID detection:
+    -Precision: 0.8014797904572172 
+    -Score: 0.7954701325968917 
+    -F1-score: 0.7928533467953576
+
+
+--------------- ECAResNet ----------------
+ID detection:
+    -Precision: 0.8001195149881448 
+    -Score: 0.7942781785956903 
+    -F1-score: 0.7918744820877999
+
+
+--------------- ECAResNet ----------------
+ID detection:
+    -Precision: 0.7996743523666309 
+    -Score: 0.794051268020808 
+    -F1-score: 0.7918065874465035
+[197 304 907 ...  58 458 596]
+[197 304 907 ...  68 458 596]
+
+
+--------------- ResNet ----------------
+ID detection:
+    -Precision: 0.7618292507154563 
+    -Score: 0.74898 
+    -F1-score: 0.746551809014848
+
+
+--------------- DeiT ----------------
+ID detection:
+    -Precision: 0.7765810051051936 
+    -Score: 0.77004 
+    -F1-score: 0.7664231978257349
+
+
+--------------- MLPMixer ----------------
+ID detection:
+    -Precision: 0.7608686753694419 
+    -Score: 0.75688 
+    -F1-score: 0.7544787129206798
+
+
+--------------- ECAResnet ----------------
+ID detection:
+    -Precision: 0.7996000784821561 
+    -Score: 0.79402 
+    -F1-score: 0.7919545997209794
+FINISHED at Sun Dec 12 14:40:27 CET 2021

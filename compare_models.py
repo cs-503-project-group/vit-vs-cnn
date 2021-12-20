@@ -9,6 +9,8 @@ from eval_utils import evaluate_OOD_detection, evaluate_ID_detection
 import pickle
 from torch import cuda
 import json
+import matplotlib.pyplot as plt
+import pandas as pd
 
 
 class Image_Dataset(Dataset):
@@ -18,15 +20,15 @@ class Image_Dataset(Dataset):
         self.data = []
         self.transform = transform
 
-        # Add ID images to data: [img_name, 0] -- 0 means ID
+        # Add ID images to data: [img_name, 0] -- 11 means ID
         folder = os.listdir(self.id_data_dir)[0]
         for file in os.listdir(self.id_data_dir + folder):
-            self.data.append((self.id_data_dir + folder + '/' + file, 0))
+            self.data.append((self.id_data_dir + folder + '/' + file, 1))
 
-        # Add OOD images to data: [img_name, 1] -- 1 means OOD
+        # Add OOD images to data: [img_name, 1] -- 0 means OOD
         for folder in os.listdir(self.ood_data_dir):
             for file in os.listdir(self.ood_data_dir + folder):
-                self.data.append((self.ood_data_dir + folder + '/' + file, 1))
+                self.data.append((self.ood_data_dir + folder + '/' + file, 0))
 
     def __getitem__(self, idx):
         img_path, target = self.data[idx]
@@ -109,7 +111,7 @@ def save_to_pickle(list_of_variables_to_save, list_of_variable_names_to_save, no
         file_name = list_of_variable_names_to_save[i]
         if non_semantic:
             file_name = "non-semantic_"+file_name
-        with open(f'../vit-vs-cnn/pickles/{file_name}.pickle', 'wb') as f:
+        with open(f'../vit-vs-cnn/results/{file_name}.pickle', 'wb') as f:
             pickle.dump(var, f)
 
 def main(run_ood, run_id, non_semantic, tmp_scale, entropy):
@@ -140,21 +142,23 @@ def main(run_ood, run_id, non_semantic, tmp_scale, entropy):
         data_loader = DataLoader(dataset, batch_size=16, shuffle=True)
         thresholds = np.arange(0.1, 1.0, step=0.1)
 
-        ood_resnet_prc, ood_resnet_rec, ood_resnet_f1 =          evaluate_OOD_detection(resnet_model,    data_loader, thresholds, device, tmp_scale=tmp_scale, use_entropy=entropy)
-        ood_deit_prc, ood_deit_rec, ood_deit_f1 =                evaluate_OOD_detection(deit_model,      data_loader, thresholds, device, tmp_scale=tmp_scale, use_entropy=entropy)
-        ood_mlpmixer_prc, ood_mlpmixer_rec, ood_mlpmixer_f1 =    evaluate_OOD_detection(mlpmixer_model,  data_loader, thresholds, device, tmp_scale=tmp_scale, use_entropy=entropy)
-        ood_ecaresnet_prc, ood_ecaresnet_rec, ood_ecaresnet_f1 = evaluate_OOD_detection(ecaresnet_model, data_loader, thresholds, device, tmp_scale=tmp_scale, use_entropy=entropy)
+       
+        evaluate_OOD_detection(resnet_model,    data_loader, thresholds, device, non_semantic=non_semantic, tmp_scale=tmp_scale, use_entropy=entropy)
+        evaluate_OOD_detection(deit_model,      data_loader, thresholds, device, non_semantic=non_semantic, tmp_scale=tmp_scale, use_entropy=entropy)
+        evaluate_OOD_detection(mlpmixer_model,  data_loader, thresholds, device, non_semantic=non_semantic, tmp_scale=tmp_scale, use_entropy=entropy)
+        evaluate_OOD_detection(ecaresnet_model, data_loader, thresholds, device, non_semantic=non_semantic, tmp_scale=tmp_scale, use_entropy=entropy)
+        
 
        
-        print_score_recall_f1('ResNet',    ood_prc=ood_resnet_prc,    ood_recall=ood_resnet_rec,    ood_f1=ood_resnet_f1,    run_ood=True)
-        print_score_recall_f1('DeiT',      ood_prc=ood_deit_prc,      ood_recall=ood_deit_rec,      ood_f1=ood_deit_f1,      run_ood=True)
-        print_score_recall_f1('MLPMixer',  ood_prc=ood_mlpmixer_prc,  ood_recall=ood_mlpmixer_rec,  ood_f1=ood_mlpmixer_f1 , run_ood=True)
-        print_score_recall_f1('ECAResNet', ood_prc=ood_ecaresnet_prc, ood_recall=ood_ecaresnet_rec, ood_f1=ood_ecaresnet_f1, run_ood=True)
+        # print_score_recall_f1('ResNet',    ood_prc=ood_resnet_prc,    ood_recall=ood_resnet_rec,    ood_f1=ood_resnet_f1,    run_ood=True)
+        # print_score_recall_f1('DeiT',      ood_prc=ood_deit_prc,      ood_recall=ood_deit_rec,      ood_f1=ood_deit_f1,      run_ood=True)
+        # print_score_recall_f1('MLPMixer',  ood_prc=ood_mlpmixer_prc,  ood_recall=ood_mlpmixer_rec,  ood_f1=ood_mlpmixer_f1 , run_ood=True)
+        # print_score_recall_f1('ECAResNet', ood_prc=ood_ecaresnet_prc, ood_recall=ood_ecaresnet_rec, ood_f1=ood_ecaresnet_f1, run_ood=True)
 
-        save_to_pickle([ood_resnet_prc,    ood_resnet_rec,    ood_resnet_f1],    ['ood_resnet_prc',    'ood_resnet_rec',    'ood_resnet_f1'], non_semantic=non_semantic)
-        save_to_pickle([ood_deit_prc,      ood_deit_rec,      ood_deit_f1],      ['ood_deit_prc',      'ood_deit_rec',      'ood_deit_f1'], non_semantic=non_semantic)
-        save_to_pickle([ood_mlpmixer_prc,  ood_mlpmixer_rec,  ood_mlpmixer_f1],  ['ood_mlpmixer_prc',  'ood_mlpmixer_rec',  'ood_mlpmixer_f1'], non_semantic=non_semantic)
-        save_to_pickle([ood_ecaresnet_prc, ood_ecaresnet_rec, ood_ecaresnet_f1], ['ood_ecaresnet_prc', 'ood_ecaresnet_rec', 'ood_ecaresnet_f1'], non_semantic=non_semantic)
+        # save_to_pickle([ood_resnet_prc,    ood_resnet_rec,    ood_resnet_f1],    ['ood_resnet_prc',    'ood_resnet_rec',    'ood_resnet_f1'], non_semantic=non_semantic)
+        # save_to_pickle([ood_deit_prc,      ood_deit_rec,      ood_deit_f1],      ['ood_deit_prc',      'ood_deit_rec',      'ood_deit_f1'], non_semantic=non_semantic)
+        # save_to_pickle([ood_mlpmixer_prc,  ood_mlpmixer_rec,  ood_mlpmixer_f1],  ['ood_mlpmixer_prc',  'ood_mlpmixer_rec',  'ood_mlpmixer_f1'], non_semantic=non_semantic)
+        # save_to_pickle([ood_ecaresnet_prc, ood_ecaresnet_rec, ood_ecaresnet_f1], ['ood_ecaresnet_prc', 'ood_ecaresnet_rec', 'ood_ecaresnet_f1'], non_semantic=non_semantic)
 
     # --------- ID evaluation
     if run_id:
@@ -162,16 +166,26 @@ def main(run_ood, run_id, non_semantic, tmp_scale, entropy):
         if non_semantic:
             print('Performing ID evaluation for non semantic shifts')
             imagenet_data = MultiDomain_Dataset(md_data_dir, transform=ori_preprocess)
+            data_type = "nonsemantic_OOD" 
         else:
             print('Performing ID evaluation')
             imagenet_data = ImageNet(root='data/imagenet-val', split='val', transform=ori_preprocess)
-            
+            data_type = "ID"
+
         data_loader_ID = DataLoader(imagenet_data, batch_size=16, shuffle=True)
 
         id_resnet_prc, id_resnet_rec, id_resnet_f1 =          evaluate_ID_detection(resnet_model,    data_loader_ID, device)
         id_deit_prc, id_deit_rec, id_deit_f1 =                evaluate_ID_detection(deit_model,      data_loader_ID, device)
         id_mlpmixer_prc, id_mlpmixer_rec, id_mlpmixer_f1 =    evaluate_ID_detection(mlpmixer_model,  data_loader_ID, device)
         id_ecaresnet_prc, id_ecaresnet_rec, id_ecaresnet_f1 = evaluate_ID_detection(ecaresnet_model, data_loader_ID, device)
+
+        res_dict = {"model": [mlp_mixer.name, resnet_model.name, ecaresnet_model.name, deit_model.name],
+                    "precision": [id_mlpmixer_prc, id_resnet_prc, id_ecaresnet_prc, id_deit_prc],
+                    "recall": [id_mlpmixer_rec, id_resnet_rec, id_ecaresnet_rec, id_deit_rec],
+                    "f1 score": [id_mlpmixer_f1, id_resnet_f1, id_ecaresnet_f1, id_deit_f1]}
+
+        df = pd.DataFrame(res_dict)
+        df.to_csv(f'../vit-vs-cnn/results/{data_type}/ID_evaluation.csv')
 
         print_score_recall_f1('ResNet',    id_resnet_prc,    id_resnet_rec,    id_resnet_f1,    run_id=True)
         print_score_recall_f1('DeiT',      id_deit_prc,      id_deit_rec,      id_deit_f1,      run_id=True)
@@ -185,4 +199,4 @@ def main(run_ood, run_id, non_semantic, tmp_scale, entropy):
 
 
 if __name__== '__main__':
-    main(run_id=False, run_ood=True, non_semantic=False, tmp_scale=None, entropy=True)
+    main(run_id=False, run_ood=True, non_semantic=True, tmp_scale=None, entropy=False)

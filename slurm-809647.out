@@ -1,0 +1,10 @@
+fidis i43
+STARTING AT pon, 13 gru 2021, 11:10:19 CET
+/home/matvieir/vit-vs-cnn
+Traceback (most recent call last):
+  File "/home/matvieir/vit-vs-cnn/compare_models.py", line 1, in <module>
+    from models import *
+  File "/home/matvieir/vit-vs-cnn/models/resnet.py", line 1, in <module>
+    import torch.nn as nn
+ModuleNotFoundError: No module named 'torch'
+FINISHED at pon, 13 gru 2021, 11:10:19 CET
