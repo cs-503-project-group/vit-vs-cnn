@@ -1,9 +1,10 @@
 import matplotlib.pyplot as plt 
 import numpy as np
 import pickle
+import argparse
+from sklearn.metrics import auc
 
-
-def read_metric(file_name):
+def read_pickle(file_name):
     objects = None
     with (open(file_name, "rb")) as openfile:
       
@@ -14,60 +15,92 @@ def read_metric(file_name):
 
     return objects
 
+def box_plot(model_names, dir_name):
+    
+    for model_name in model_names:
+        OOD_probs = read_pickle(dir_name + f'{model_name}_OOD_probs.pickle')
+        ID_probs = read_pickle(dir_name + f'{model_name}_ID_probs.pickle')
+    
+        print(f"{model_name}\n mean diff:{np.mean(ID_probs)-np.mean(OOD_probs)}")
+        plt.boxplot([ID_probs, OOD_probs], showmeans=True, labels=["ID Data", "OOD Data"])
+        plt.title(model_name, fontsize=15)
+        plt.show()
+        plt.savefig(fname=f"{dir_name}{model_name}_box_plot")
+        plt.clf()
 
-ood_resnet_prc = read_metric('ood_resnet_prc.pickle')
-ood_resnet_rec = read_metric('ood_resnet_rec.pickle')
-ood_resnet_f1 = read_metric('ood_resnet_f1.pickle')
+def per_model_roc_cruve(model_names, dir_name):
+   
+    for model_name in model_names:
+        fpr = read_pickle(dir_name + f'{model_name}_fpr.pickle')
+        tpr = read_pickle(dir_name + f'{model_name}_tpr.pickle')
+
+        roc_auc = auc(x=fpr, y=tpr)
+
+        plt.plot(fpr, tpr, 'b')
+        plt.plot([0, 1], [0, 1],'k--')
+        plt.plot([0, 1], [0.9, 0.9], 'g--')
+        plt.xlim([0, 1])
+        plt.ylim([0, 1])
+        plt.title(f'{model_name} FPR when TPR is {tpr[tpr>=0.9][0]}: {fpr[tpr>=0.9][0]}', fontsize=15)
+        plt.savefig(fname=f"{dir_name}{model_name}_roc_curve")
+        plt.clf()
 
 
+def roc_curve(model_names, dir_name, tmp_scale=False, entropy=False):
 
-ood_deit_prc = read_metric('ood_deit_prc.pickle')
-ood_deit_rec = read_metric('ood_deit_rec.pickle')
-ood_deit_f1 = read_metric('ood_deit_f1.pickle')
+    if tmp_scale:
+        caption = "ROC-temperature scaling"
+    elif entropy:
+        caption = "ROC-entropy"
+    else:
+        caption = "ROC-raw softmax"
+        
+    plt.title(caption, fontsize=15)
+
+    for model_name in model_names:
+        fpr = read_pickle(dir_name + f'{model_name}_fpr.pickle')
+        tpr = read_pickle(dir_name + f'{model_name}_tpr.pickle')
+
+        roc_auc = auc(x=fpr, y=tpr)
+
+        plt.plot(fpr, tpr, label = f'{model_name} AUC = %0.2f' % roc_auc)
+
+    plt.plot([0, 1], [0, 1],'k--')
+    plt.plot([0, 1], [0.9, 0.9], 'g--')
+    plt.xlim([0, 1])
+    plt.ylim([0, 1])
+    plt.ylabel('True Positive Rate', fontsize=15)
+    plt.xlabel('False Positive Rate', fontsize=15)
+    plt.legend(loc = 'lower right', fontsize=14)
+    plt.savefig(fname=f"{dir_name}roc_curve")
+    
+
+def main():
+    # add arguments: entropy, temp_scale, non_semantic
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--temp_scale", type=int, 
+                        help="the temperature used in temperature scaling. If not set, no temperature scaling will be used.")
+
+    parser.add_argument("--entropy", action="store_true",
+                        help="if set, the prediction is performed based on entopy of softmax probabiities, and max probability otherwise.")
+    
+    parser.add_argument("--nonsemantic", action="store_true",
+                        help="if set, the evaluation is performed for non-semantic distribution shifts.")
+
+    args = parser.parse_args()
+    OOD_type = "semantic_OOD"
+    if args.nonsemantic:
+        OOD_type = "non" + OOD_type
+    # plot box_plots and roc curves
+    # TODO: the dir_name might need adjustments based on your root directory
+    dir_name = f'../vit-vs-cnn/results/{OOD_type}/{args.entropy}_{args.temp_scale}/'
+    model_names = ["ResNet", "MLPMixer", "ECAResNet", "DeiT"]
+
+    box_plot(model_names, dir_name)
+    # roc_curve(model_names, dir_name, args.temp_scale, args.entropy)
+    # per_model_roc_cruve(model_names, dir_name)
 
 
-ood_mlpmixer_prc = read_metric('ood_mlpmixer_prc.pickle')
-ood_mlpmixer_rec = read_metric('ood_mlpmixer_rec.pickle')
-ood_mlpmixer_f1 = read_metric('ood_mlpmixer_f1.pickle')
-
-
-ood_ecaresnet_prc = read_metric('ood_ecaresnet_prc.pickle')
-ood_ecaresnet_rec = read_metric('ood_ecaresnet_rec.pickle')
-ood_ecaresnet_f1 = read_metric('ood_ecaresnet_f1.pickle')
-
-# data to be plotted
-x = np.arange(0.1, 0.5, step=0.05)
- 
-# plotting
-# plt.title("OOD Detection Precision")
-# plt.xlabel("OOD threshold")
-# plt.ylabel("Precision")
-# plt.plot(x, ood_resnet_prc, label="ResNet50")
-# plt.plot(x, ood_deit_prc, label="DeiT")
-# plt.plot(x, ood_mlpmixer_prc, label="MLPMixer")
-# plt.plot(x, ood_ecaresnet_prc, label="EcaResNet")
-# plt.legend()
-# plt.show()
-# plt.savefig("precision.jpg")
-
-# plt.title("OOD Detection Recall")
-# plt.xlabel("OOD threshold")
-# plt.ylabel("Recall")
-# plt.plot(x, ood_resnet_rec, label="ResNet50")
-# plt.plot(x, ood_deit_rec, label="DeiT")
-# plt.plot(x, ood_mlpmixer_rec, label="MLPMixer")
-# plt.plot(x, ood_ecaresnet_rec, label="EcaResNet")
-# plt.legend()
-# plt.show()
-# plt.savefig("recall.jpg")
-
-plt.title("OOD Detection F1-Score")
-plt.xlabel("OOD threshold")
-plt.ylabel("F1-Score")
-plt.plot(x, ood_resnet_f1, label="ResNet50")
-plt.plot(x, ood_deit_f1, label="DeiT")
-plt.plot(x, ood_mlpmixer_f1, label="MLPMixer")
-plt.plot(x, ood_ecaresnet_f1, label="EcaResNet")
-plt.legend()
-plt.show()
-plt.savefig("f1.jpg")
+    
+if __name__== '__main__':
+    main()
