@@ -26,13 +26,8 @@ The commando above will download the images inside the folder `data`.
   - [ ]  ecaresnet50d
   - [ ]  deit_small_patch16_224
 - [ ]  create charts like the ones in [ODIN](https://github.com/facebookresearch/odin)
-- [ ] Compare all models for ID data
-- [ ] Compare the two models’ performance in detecting OOD inputs
-- [ ] Compare with other models
-  - [ ] ConvMixer: model not found 
-  - [ ] MLPMixer: strange probabilities => read about MLPMixer output
-  - [ ] EcaResNet
-- [ ] Study   how   role   of   attention   and   convolution   on model’s performance in OOD detection
+- [x] Compare all models for ID data
+- [x] Compare the two models’ performance in detecting OOD inputs
+- [ ] Study how role of attention and convolution on model’s performance in OOD detection
 - [ ] Study how results change when moving from semantic distribution shifts to non-semantic distribution shifts
-- [ ] Check if the classes of the ground truth are ok by randomly picking 20 classes and double-checking it's ok!
 
