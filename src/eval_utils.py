@@ -66,42 +66,6 @@ def evaluate_OOD_detection(model, dataloader, thresholds, device, non_semantic=F
     with open(dir_name + f'{model_name}_tpr.pickle', 'wb') as f:
             pickle.dump(tpr, f)
 
-    # roc_auc = auc(x=fpr, y=tpr)
-
-    # plt.title('Receiver Operating Characteristic')
-    # plt.plot(fpr, tpr, 'b', label = f'{model.name} AUC = %0.2f' % roc_auc, color=color)
-    # plt.legend(loc = 'lower right')
-    # plt.plot([0, 1], [0, 1],'r--')
-    # plt.xlim([0, 1])
-    # plt.ylim([0, 1])
-    # plt.ylabel('True Positive Rate')
-    # plt.xlabel('False Positive Rate')
-    # plt.legend()
-    # plt.savefig(fname=f"{dir_name}{model_name}_roc_curve")
-
-  
-
-    # plt.boxplot([ID_probs, OOD_probs], showmeans=True, labels=["ID Data", "OOD Data"])
-    # plt.title(model_name)
-    # plt.show()
-    # plt.savefig(fname=f"{dir_name}{model_name}_box_plot")
-    # plt.clf()
-
-    
-    # precisions = np.zeros(len(thresholds))
-    # recalls = np.zeros(len(thresholds))
-    # f1_scores = np.zeros(len(thresholds))
-
-    # # for ind, t in enumerate(thresholds):
-    # #     maxes = np.max(probs, axis=1)
-    # #     preds = maxes > t # if the max is greater than the threshold: predict it as 1 (=in-distribution)
-    # #     prc, rec, f1, _ = precision_recall_fscore_support(targets, preds, average='binary', pos_label=1)
-    # #     precisions[ind] = prc
-    # #     recalls[ind] = rec
-    # #     f1_scores[ind] = f1
-    
-    # return precisions, recalls, f1_scores
-
 
 def evaluate_ID_detection(model, dataloader, device, num_classes=1000):
    
