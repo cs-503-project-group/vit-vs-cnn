@@ -15,7 +15,7 @@ def print_score_recall_f1(model_name, id_prc=None, id_recall=None, id_f1=None, o
         print(f'OOD detection:\n    -Precision: {ood_prc} \n    -Score: {ood_recall} \n    -F1-score: {ood_f1}')
 
 
-def evaluate_OOD_detection(model, dataloader, thresholds, device, non_semantic=False, tmp_scale=None, use_entropy=False, num_classes=1000):
+def evaluate_OOD_detection(model, dataloader, thresholds, device, non_semantic=False, tmp_scale=False, use_entropy=False, num_classes=1000):
     
     model_name = model.name
     if torch.cuda.device_count() > 1:
