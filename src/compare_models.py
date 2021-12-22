@@ -159,4 +159,4 @@ def main(run_ood, run_id, non_semantic, tmp_scale, entropy):
 
 
 if __name__== '__main__':
-    main(run_id=False, run_ood=True, non_semantic=True, tmp_scale=None, entropy=False)
+    main(run_id=False, run_ood=True, non_semantic=True, tmp_scale=False, entropy=False)
