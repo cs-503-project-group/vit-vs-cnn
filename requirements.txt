@@ -5,3 +5,7 @@ timm
 sklearn
 matplotlib
 prettytable
+pandas 
+scipy
+PIL
+nltk
