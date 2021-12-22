@@ -22,7 +22,7 @@ Here are the steps for downloading data belonging to randomly chosen classes fro
 
 ## Non Semantic OoD Data
 
-You can download the ImageNet-R dataset from [here](https://people.eecs.berkeley.edu/~hendrycks/imagenet-r.tar). 
+You can download the ImageNet-R dataset from [here](https://people.eecs.berkeley.edu/~hendrycks/imagenet-r.tar). Then untar the downloaded folder and put it in ```data/``` directory.
 
 ## Validation set
 Go to <https://image-net.org/challenges/LSVRC/2012/2012-downloads.php> download `Development Kit tasks 1 & 2` and `validation images`. Put them in ```data/imagenet-val``` folder. 
@@ -41,5 +41,23 @@ Untar `validation images` from previous point to to the ```data/ID_data``` folde
 ## Usage
 1. Install requierments from `requirements.txt`
 2. Download the data as written above
-3. Run experiment by running `src/compare_models.py` there are five arguments which will describe the experiment
-4. Optionally run `src/plot.py` for generating the results plots of previously daved models
+3. Run experiment by running `src/compare_models.py` there are five arguments which will describe the experiment.
+  - `run_id`: if set, the image classification experiment will be performed.
+  - `run_ood`: if set, the OoD detection experiment will be performed.
+  - `non_semantic`: if set, imagenet-r will be used as the OoD data, otherwise our curated OoD dataset (semantic shifts) will be used.
+  - `tmp_scale`: if set, softmax with temperature scaling will b used.
+  - `entropy`: if set, the entropy of softmax probability distributions will be used, otherwise the maximum softmax probability.
+  
+This will run the experiments and store the results in as pickle files in their corresponding folder in `results` directory. The pickle files can then be used to generate plots as explained below.
+
+4. Optionally run `src/plot.py` for generating the results plots of previously daved models. You can indicate the type of experiment using `--nonsemantic`, `--entropy`, or `--temp_scale`. For example for generating plots corresponding to experiment compating models over non-semantic shifts using entropy of softmax run the following command:
+
+```
+python plot.py --nonsemantic --entropy
+```
+
+And to generate plots corresponding to experiment compating models over semantic shifts using tempearture scaling run the following command:
+
+``` 
+python plot.py --temp_scale
+```
