@@ -78,8 +78,8 @@ def roc_curve(model_names, dir_name, tmp_scale=False, entropy=False):
 def main():
     # add arguments: entropy, temp_scale, non_semantic
     parser = argparse.ArgumentParser()
-    parser.add_argument("--temp_scale", type=int, 
-                        help="the temperature used in temperature scaling. If not set, no temperature scaling will be used.")
+    parser.add_argument("--temp_scale", action="store_true", 
+                        help="if set, temperature scaling with T=1000 is used. If not set, no temperature scaling will be used.")
 
     parser.add_argument("--entropy", action="store_true",
                         help="if set, the prediction is performed based on entopy of softmax probabiities, and max probability otherwise.")
@@ -93,7 +93,7 @@ def main():
         OOD_type = "non" + OOD_type
     # plot box_plots and roc curves
     # TODO: the dir_name might need adjustments based on your root directory
-    dir_name = f'../vit-vs-cnn/results/{OOD_type}/'
+    dir_name = f'../results/{OOD_type}/'
     if args.entropy:
         dir_name += 'entropy/'
     elif args.temp_scale:

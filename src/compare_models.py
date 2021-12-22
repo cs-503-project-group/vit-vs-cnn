@@ -88,9 +88,9 @@ def save_to_pickle(list_of_variables_to_save, list_of_variable_names_to_save, no
 
 def main(run_ood, run_id, non_semantic, tmp_scale, entropy):
     device = 'cuda' if cuda.is_available() else 'cpu'
-    ood_data_dir = '../vit-vs-cnn/data/OOD_data/'
-    id_data_dir = '../vit-vs-cnn/data/ID_data/'
-    md_data_dir = '../vit-vs-cnn/data/imagenet-r/'
+    ood_data_dir = '../data/OOD_data/'
+    id_data_dir = '../data/ID_data/'
+    md_data_dir = '../data/imagenet-r/'
 
     ori_preprocess = Compose([
             Resize((224), interpolation=Image.BICUBIC),
@@ -145,7 +145,7 @@ def main(run_ood, run_id, non_semantic, tmp_scale, entropy):
                     "f1 score": [id_mlpmixer_f1, id_resnet_f1, id_ecaresnet_f1, id_deit_f1]}
 
         df = pd.DataFrame(res_dict)
-        df.to_csv(f'../vit-vs-cnn/results/{data_type}/ID_evaluation.csv')
+        df.to_csv(f'../results/{data_type}/ID_evaluation.csv')
 
         print_score_recall_f1('ResNet',    id_resnet_prc,    id_resnet_rec,    id_resnet_f1,    run_id=True)
         print_score_recall_f1('DeiT',      id_deit_prc,      id_deit_rec,      id_deit_f1,      run_id=True)

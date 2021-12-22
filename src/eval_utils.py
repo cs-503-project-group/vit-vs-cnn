@@ -52,7 +52,7 @@ def evaluate_OOD_detection(model, dataloader, thresholds, device, non_semantic=F
     if non_semantic:
         OOD_type = "non" + OOD_type
         
-    dir_name = f'../vit-vs-cnn/results/{OOD_type}/'
+    dir_name = f'../results/{OOD_type}/'
     
     if use_entropy:
         dir_name += 'entropy/'
