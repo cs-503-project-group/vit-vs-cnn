@@ -9,11 +9,11 @@ class ECAResNet(nn.Module):
         self.softmax = nn.Softmax(dim=1)
         self.name = 'ECAResNet'
     
-    def forward(self, image, tmp_scale=None):
+    def forward(self, image, tmp_scale=False):
         logits = self.ecaresnet(image)
 
         if tmp_scale:
-            probs = self.softmax(logits/tmp_scale)
+            probs = self.softmax(logits/1000)
         else:
             probs = self.softmax(logits)
         
