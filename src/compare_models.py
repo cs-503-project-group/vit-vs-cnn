@@ -48,7 +48,7 @@ class MultiDomain_Dataset(Dataset):
         self.classes = [] # what is this for?
         self.transform = transform
         # Load ground truth labels
-        with open('../vit-vs-cnn/classes_imagenet/imagenet_r.json') as f_in:
+        with open('../classes_imagenet/imagenet_r.json') as f_in:
             self.gt_labels = json.load(f_in)
 
         # Add MD images to data [img_name, gt_label]
@@ -83,7 +83,7 @@ def save_to_pickle(list_of_variables_to_save, list_of_variable_names_to_save, no
         file_name = list_of_variable_names_to_save[i]
         if non_semantic:
             file_name = "non-semantic_"+file_name
-        with open(f'../vit-vs-cnn/results/{file_name}.pickle', 'wb') as f:
+        with open(f'../results/{file_name}.pickle', 'wb') as f:
             pickle.dump(var, f)
 
 def main(run_ood, run_id, non_semantic, tmp_scale, entropy):
