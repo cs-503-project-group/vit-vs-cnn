@@ -13,11 +13,11 @@ class ResNet(nn.Module):
         self.name = 'ResNet'
     
     
-    def forward(self, image, tmp_scale=None):
+    def forward(self, image, tmp_scale=False):
         logits = self.resnet(image)
 
         if tmp_scale:
-            probs = self.softmax(logits/tmp_scale)
+            probs = self.softmax(logits/1000)
         else:
             probs = self.softmax(logits)
         
