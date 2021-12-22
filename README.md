@@ -45,7 +45,7 @@ Untar `validation images` from previous point to to the ```data/ID_data``` folde
   - `run_id`: if set, the image classification experiment will be performed.
   - `run_ood`: if set, the OoD detection experiment will be performed.
   - `non_semantic`: if set, imagenet-r will be used as the OoD data, otherwise our curated OoD dataset (semantic shifts) will be used.
-  - `tmp_scale`: if set, softmax with temperature scaling will b used.
+  - `tmp_scale`: if set, softmax with temperature scaling will be used.
   - `entropy`: if set, the entropy of softmax probability distributions will be used, otherwise the maximum softmax probability.
   
 This will run the experiments and store the results in as pickle files in their corresponding folder in `results` directory. The pickle files can then be used to generate plots as explained below.
