@@ -51,8 +51,16 @@ def evaluate_OOD_detection(model, dataloader, thresholds, device, non_semantic=F
     OOD_type = "semantic_OOD"
     if non_semantic:
         OOD_type = "non" + OOD_type
-
-    dir_name = f'../vit-vs-cnn/results/{OOD_type}/{use_entropy}_{tmp_scale}/'
+        
+    dir_name = f'../vit-vs-cnn/results/{OOD_type}/'
+    
+    if use_entropy:
+        dir_name += 'entropy/'
+    elif tmp_scale:
+        dir_name += 'tmp_scale/'
+    else:
+        dir_name += 'softmax/'
+    
     if not os.path.isdir(dir_name):
         os.mkdir(dir_name)
 
