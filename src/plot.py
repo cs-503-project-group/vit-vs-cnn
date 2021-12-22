@@ -93,12 +93,19 @@ def main():
         OOD_type = "non" + OOD_type
     # plot box_plots and roc curves
     # TODO: the dir_name might need adjustments based on your root directory
-    dir_name = f'../vit-vs-cnn/results/{OOD_type}/{args.entropy}_{args.temp_scale}/'
+    dir_name = f'../vit-vs-cnn/results/{OOD_type}/'
+    if args.entropy:
+        dir_name += 'entropy/'
+    elif args.temp_scale:
+        dir_name += 'tmp_scale/'
+    else:
+        dir_name += 'softmax/'
+        
     model_names = ["ResNet", "MLPMixer", "ECAResNet", "DeiT"]
 
     box_plot(model_names, dir_name)
-    # roc_curve(model_names, dir_name, args.temp_scale, args.entropy)
-    # per_model_roc_cruve(model_names, dir_name)
+    roc_curve(model_names, dir_name, args.temp_scale, args.entropy)
+    per_model_roc_cruve(model_names, dir_name)
 
 
     
