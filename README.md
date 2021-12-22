@@ -48,7 +48,7 @@ Untar `validation images` from previous point to to the ```data/ID_data``` folde
   - `tmp_scale`: if set, softmax with temperature scaling will be used.
   - `entropy`: if set, the entropy of softmax probability distributions will be used, otherwise the maximum softmax probability.
   
-This will run the experiments and store the results in as pickle files in their corresponding folder in `results` directory. The pickle files can then be used to generate plots as explained below.
+This will run the experiments and store the results as pickle files in their corresponding folder in `results` directory. The pickle files can then be used to generate plots as explained below. For ID experiments, it will also store a csv file reporting the model's precison, recall, and f1-score.
 
 4. Optionally run `src/plot.py` for generating the results plots of previously daved models. You can indicate the type of experiment using `--nonsemantic`, `--entropy`, or `--temp_scale`. This will generate plots and store them in the directory dedicated to the experiment in `results` folder. (Our generated plot are laready there :) )
 5. For example for generating plots corresponding to experiment compating models over non-semantic shifts using entropy of softmax run the following command:
