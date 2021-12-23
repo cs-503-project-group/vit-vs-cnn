@@ -1,5 +1,5 @@
 # vit-vs-cnn
-Project of the course CS-503 "Visual intelligence: Machines &amp; Minds" at EPFL 2021. Performance comparison of ViTs and CNNs on unsemantic distribution shifts (i.e. unseen classes).
+Project of the course CS-503 "Visual intelligence: Machines &amp; Minds" at EPFL 2021. Performance comparison of ViTs and CNNs on unsemantic distribution shifts (i.e. unseen classes). For more details, see the [full project report](Report.pdf).
 
 <!-- ## Generate data from specified classes in ImageNet-21k with setup.sh script
 - run `setup.sh n`, where n are OOD classes. It should download all nessesary data and install all requirements. It is advised to use virtual environment before
