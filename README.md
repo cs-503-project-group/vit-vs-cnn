@@ -1,5 +1,5 @@
 # vit-vs-cnn
-Project of the course CS-503 "Visual intelligence: Machines &amp; Minds" at EPFL 2021. Performance comparison of ViTs and CNNs on unsemantic distribution shifts (i.e. unseen classes).
+Project of the course CS-503 "Visual intelligence: Machines &amp; Minds" at EPFL 2021. Performance comparison of ViTs and CNNs on unsemantic distribution shifts (i.e. unseen classes). For more details, see the [full project report](Report.pdf).
 
 <!-- ## Generate data from specified classes in ImageNet-21k with setup.sh script
 - run `setup.sh n`, where n are OOD classes. It should download all nessesary data and install all requirements. It is advised to use virtual environment before
@@ -50,8 +50,7 @@ Untar `validation images` from previous point to to the ```data/ID_data``` folde
   
 This will run the experiments and store the results as pickle files in their corresponding folder in `results` directory. The pickle files can then be used to generate plots as explained below. For ID experiments, it will also store a csv file reporting the model's precison, recall, and f1-score.
 
-4. Optionally run `src/plot.py` for generating the results plots of previously daved models. You can indicate the type of experiment using `--nonsemantic`, `--entropy`, or `--temp_scale`. This will generate plots and store them in the directory dedicated to the experiment in `results` folder. (Our generated plot are laready there :) )
-5. For example for generating plots corresponding to experiment compating models over non-semantic shifts using entropy of softmax run the following command:
+4. Optionally run `src/plot.py` for generating the results plots of previously daved models. You can indicate the type of experiment using `--nonsemantic`, `--entropy`, or `--temp_scale`. This will generate plots and store them in the directory dedicated to the experiment in `results` folder. (Our generated plot are already there :) ) For example for generating plots corresponding to experiment compating models over non-semantic shifts using entropy of softmax run the following command:
 
 ```
 python plot.py --nonsemantic --entropy
