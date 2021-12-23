@@ -72,11 +72,11 @@ def roc_curve(model_names, dir_name, tmp_scale=False, entropy=False):
     plt.ylabel('True Positive Rate', fontsize=15)
     plt.xlabel('False Positive Rate', fontsize=15)
     plt.legend(loc = 'lower right', fontsize=14)
-    plt.savefig(fname=f"{dir_name}roc_curve")
+    plt.savefig(fname=f"{dir_name}roc_curve_comp")
     
 
 def main():
-    # add arguments: entropy, temp_scale, non_semantic
+  
     parser = argparse.ArgumentParser()
     parser.add_argument("--temp_scale", action="store_true", 
                         help="if set, temperature scaling with T=1000 is used. If not set, no temperature scaling will be used.")
@@ -101,7 +101,7 @@ def main():
     else:
         dir_name += 'softmax/'
         
-    model_names = ["ResNet", "MLPMixer", "ECAResNet", "DeiT"]
+    model_names = ["ResNet", "MLPMixer", "ECAResNet", "DeiT","Hybrid_Tiny_ViT" ,"Hybrid_Small_ViT"]
 
     box_plot(model_names, dir_name)
     roc_curve(model_names, dir_name, args.temp_scale, args.entropy)

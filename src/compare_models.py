@@ -105,6 +105,8 @@ def main(run_ood, run_id, non_semantic, tmp_scale, entropy):
     deit_model = deit.DeiT().to(device)
     mlpmixer_model = mlpmixer.MLPMixer().to(device)
     ecaresnet_model = ecaresnet.ECAResNet().to(device)
+    hybrid_t_vit_model = hybrid_tiny_vit.Hybrid_T_ViT().to(device)
+    hybrid_s_vit_model = hybrid_small_vit.Hybrid_S_ViT().to(device)
 
     # --------- OOD evaluation
     if run_ood:
@@ -121,7 +123,9 @@ def main(run_ood, run_id, non_semantic, tmp_scale, entropy):
         evaluate_OOD_detection(deit_model,      data_loader, thresholds, device, non_semantic=non_semantic, tmp_scale=tmp_scale, use_entropy=entropy)
         evaluate_OOD_detection(mlpmixer_model,  data_loader, thresholds, device, non_semantic=non_semantic, tmp_scale=tmp_scale, use_entropy=entropy)
         evaluate_OOD_detection(ecaresnet_model, data_loader, thresholds, device, non_semantic=non_semantic, tmp_scale=tmp_scale, use_entropy=entropy)
-        
+        evaluate_OOD_detection(hybrid_t_vit_model, data_loader, thresholds, device, non_semantic=non_semantic, tmp_scale=tmp_scale, use_entropy=entropy)
+        evaluate_OOD_detection(hybrid_s_vit_model, data_loader, thresholds, device, non_semantic=non_semantic, tmp_scale=tmp_scale, use_entropy=entropy)
+
 
     # --------- ID evaluation
     if run_id:
@@ -141,11 +145,13 @@ def main(run_ood, run_id, non_semantic, tmp_scale, entropy):
         id_deit_prc, id_deit_rec, id_deit_f1 =                evaluate_ID_detection(deit_model,      data_loader_ID, device)
         id_mlpmixer_prc, id_mlpmixer_rec, id_mlpmixer_f1 =    evaluate_ID_detection(mlpmixer_model,  data_loader_ID, device)
         id_ecaresnet_prc, id_ecaresnet_rec, id_ecaresnet_f1 = evaluate_ID_detection(ecaresnet_model, data_loader_ID, device)
+        id_hyb_t_vit_prc, id_hyb_t_vit_rec, id_hyb_t_vit_f1 = evaluate_ID_detection(hybrid_t_vit_model, data_loader_ID, device)
+        id_hyb_s_vit_prc, id_hyb_s_vit_rec, id_hyb_s_vit_f1 = evaluate_ID_detection(hybrid_s_vit_model, data_loader_ID, device)
 
-        res_dict = {"model": [mlpmixer_model.name, resnet_model.name, ecaresnet_model.name, deit_model.name],
-                    "precision": [id_mlpmixer_prc, id_resnet_prc, id_ecaresnet_prc, id_deit_prc],
-                    "recall": [id_mlpmixer_rec, id_resnet_rec, id_ecaresnet_rec, id_deit_rec],
-                    "f1 score": [id_mlpmixer_f1, id_resnet_f1, id_ecaresnet_f1, id_deit_f1]}
+        res_dict = {"model": [mlpmixer_model.name, resnet_model.name, ecaresnet_model.name, deit_model.name, hybrid_t_vit_model.name, hybrid_s_vit_model.name],
+                    "precision": [id_mlpmixer_prc, id_resnet_prc, id_ecaresnet_prc, id_deit_prc, id_hyb_t_vit_prc, id_hyb_s_vit_prc],
+                    "recall": [id_mlpmixer_rec, id_resnet_rec, id_ecaresnet_rec, id_deit_rec, id_hyb_t_vit_rec, id_hyb_s_vit_rec],
+                    "f1 score": [id_mlpmixer_f1, id_resnet_f1, id_ecaresnet_f1, id_deit_f1, id_hyb_t_vit_f1, id_hyb_s_vit_f1]}
 
         df = pd.DataFrame(res_dict)
         df.to_csv(f'../results/{data_type}/ID_evaluation.csv')
@@ -153,13 +159,17 @@ def main(run_ood, run_id, non_semantic, tmp_scale, entropy):
         print_score_recall_f1('ResNet',    id_resnet_prc,    id_resnet_rec,    id_resnet_f1,    run_id=True)
         print_score_recall_f1('DeiT',      id_deit_prc,      id_deit_rec,      id_deit_f1,      run_id=True)
         print_score_recall_f1('MLPMixer',  id_mlpmixer_prc,  id_mlpmixer_rec,  id_mlpmixer_f1,  run_id=True)
-        print_score_recall_f1('ECAResnet', id_ecaresnet_prc, id_ecaresnet_rec, id_ecaresnet_f1, run_id=True)                    
+        print_score_recall_f1('ECAResnet', id_ecaresnet_prc, id_ecaresnet_rec, id_ecaresnet_f1, run_id=True)
+        print_score_recall_f1('Hybrid_Tiny_Vit', id_hyb_t_vit_prc, id_hyb_t_vit_rec, id_hyb_t_vit_f1, run_id=True)
+        print_score_recall_f1('Hybrid_Small_Vit', id_hyb_s_vit_prc, id_hyb_s_vit_rec, id_hyb_s_vit_f1, run_id=True)                    
 
         save_to_pickle([id_resnet_prc,    id_resnet_rec,    id_resnet_f1],    ['id_resnet_prc',    'id_resnet_rec',    'id_resnet_f1'], non_semantic=non_semantic)
         save_to_pickle([id_deit_prc,      id_deit_rec,      id_deit_f1],      ['id_deit_prc',      'id_deit_rec',      'id_deit_f1'], non_semantic=non_semantic)
         save_to_pickle([id_mlpmixer_prc,  id_mlpmixer_rec,  id_mlpmixer_f1],  ['id_mlpmixer_prc',  'id_mlpmixer_rec',  'id_mlpmixer_f1'], non_semantic=non_semantic)
         save_to_pickle([id_ecaresnet_prc, id_ecaresnet_rec, id_ecaresnet_f1], ['id_ecaresnet_prc', 'id_ecaresnet_rec', 'id_ecaresnet_f1'], non_semantic=non_semantic)
+        save_to_pickle([id_hyb_t_vit_prc, id_hyb_t_vit_rec, id_hyb_t_vit_f1], ['id_hyb_t_vit_prc', 'id_hyb_t_vit_rec', 'id_hyb_t_vit_f1'], non_semantic=non_semantic)
+        save_to_pickle([id_hyb_s_vit_prc, id_hyb_s_vit_rec, id_hyb_s_vit_f1], ['id_hyb_s_vit_prc', 'id_hyb_s_vit_rec', 'id_hyb_s_vit_f1'], non_semantic=non_semantic)
 
 
 if __name__== '__main__':
-    main(run_id=True, run_ood=False, non_semantic=True, tmp_scale=False, entropy=False)
+    main(run_id=False, run_ood=True, non_semantic=False, tmp_scale=False, entropy=False)
