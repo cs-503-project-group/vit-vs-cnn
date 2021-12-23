@@ -1,1 +1,1 @@
-__all__ = ['resnet', 'deit', 'convmixer', 'mlpmixer', 'ecaresnet']
+__all__ = ['resnet', 'deit', 'mlpmixer', 'ecaresnet']

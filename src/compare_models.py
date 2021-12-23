@@ -79,11 +79,14 @@ def print_score_recall_f1(model_name, id_prc=None, id_recall=None, id_f1=None, o
         print(f'OOD detection:\n    -Precision: {ood_prc} \n    -Recall: {ood_recall} \n    -F1-score: {ood_f1}')
 
 def save_to_pickle(list_of_variables_to_save, list_of_variable_names_to_save, non_semantic=True):
+
     for i, var in enumerate(list_of_variables_to_save):
         file_name = list_of_variable_names_to_save[i]
         if non_semantic:
-            file_name = "non-semantic_"+file_name
-        with open(f'../results/{file_name}.pickle', 'wb') as f:
+            data_type = "nonsemantic_OOD"
+        else:
+            data_type = "ID"
+        with open(f'../results/{data_type}/{file_name}.pickle', 'wb') as f:
             pickle.dump(var, f)
 
 def main(run_ood, run_id, non_semantic, tmp_scale, entropy):
@@ -129,7 +132,7 @@ def main(run_ood, run_id, non_semantic, tmp_scale, entropy):
             data_type = "nonsemantic_OOD" 
         else:
             print('Performing ID evaluation')
-            imagenet_data = ImageNet(root='data/imagenet-val', split='val', transform=ori_preprocess)
+            imagenet_data = ImageNet(root='../data/imagenet-val', split='val', transform=ori_preprocess)
             data_type = "ID"
 
         data_loader_ID = DataLoader(imagenet_data, batch_size=16, shuffle=True)
@@ -159,4 +162,4 @@ def main(run_ood, run_id, non_semantic, tmp_scale, entropy):
 
 
 if __name__== '__main__':
-    main(run_id=False, run_ood=True, non_semantic=True, tmp_scale=False, entropy=False)
+    main(run_id=True, run_ood=False, non_semantic=True, tmp_scale=False, entropy=False)

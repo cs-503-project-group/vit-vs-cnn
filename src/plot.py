@@ -24,7 +24,7 @@ def box_plot(model_names, dir_name):
         print(f"{model_name}\n mean diff:{np.mean(ID_probs)-np.mean(OOD_probs)}")
         plt.boxplot([ID_probs, OOD_probs], showmeans=True, labels=["ID Data", "OOD Data"])
         plt.title(model_name, fontsize=15)
-        plt.show()
+        
         plt.savefig(fname=f"{dir_name}{model_name}_box_plot")
         plt.clf()
 
